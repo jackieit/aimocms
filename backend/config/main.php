@@ -26,6 +26,12 @@ return [
                 ],
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:Y-m-d',
+            'datetimeFormat' => 'php:Y-m-d H:i:s',
+            'timeFormat' => 'php:H:i:s',
+        ] ,
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -38,5 +44,7 @@ return [
         ],
         */
     ],
+    'language' => 'zh-CN',
+
     'params' => $params,
 ];

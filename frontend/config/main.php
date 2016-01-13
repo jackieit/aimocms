@@ -35,7 +35,16 @@ return [
             'rules' => [
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:m/d',
+            'datetimeFormat' => 'php:m/d H:i:s',
+            'timeFormat' => 'php:H:i:s',
+        ] ,
+
 
     ],
+    'language' => 'zh-CN',
+
     'params' => $params,
 ];
