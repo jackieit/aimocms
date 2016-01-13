@@ -10,4 +10,6 @@
   ```./yii migrate/up```   
   
 # 权限相关
-  [权限设计](docs/idea.md)
+  [权限设计](docs/idea.md)  
+# 需求分析  
+  [功能需求](https://github.com/jackieit/aimocms/wiki/Requirements)
