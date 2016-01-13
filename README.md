@@ -5,7 +5,8 @@
   * 自行手动安装vendor 库
   ```php composer.par install```      
   * 设定开发还是生产环境，然后编辑 common/config/main-local.php file 设置数据库连接参数（需要手动创建数据库）
-  ```./init```            
+  ```./init```  
+            
   * 创建数据库表结构和数据
    ```./yii migrate/up```   
   
