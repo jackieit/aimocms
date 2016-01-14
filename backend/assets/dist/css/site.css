@@ -3,42 +3,8 @@ html,body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6{
 }
 html,body {
     height: 100%;
-    font-size: 12px;
-    line-height: 1.5em;
 }
-
-.wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
-}
-
-.wrap > .container {
-    padding: 70px 15px 20px;
-}
-
-.footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-
-.jumbotron {
-    text-align: center;
-    background-color: transparent;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-
-.not-set {
-    color: #c55;
-    font-style: italic;
-}
+.breadcrumb{margin-top: 5px;}
 
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
@@ -97,13 +63,4 @@ a.desc:after {
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
-}
-
-/* align the logout "link" (button in form) of the navbar */
-.nav > li > form {
-    padding: 8px;
-}
-
-.nav > li > form > button:hover {
-    text-decoration: none;
 }

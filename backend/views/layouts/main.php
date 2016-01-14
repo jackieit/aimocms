@@ -11,8 +11,8 @@ use yii\widgets\Breadcrumbs;
 //use yii;
 AppAsset::register($this);
 
-$this->title = 'Dashboard';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = 'Dashboard';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -305,10 +305,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a href="#"><i class="fa fa-user fa-fw"></i>用户相关<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="active" href="blank.html">用户列表</a>
+                                <a href="<?=Url::to(['user/index'])?>">用户列表</a>
                             </li>
                             <li>
-                                <a href="login.html">新增用户</a>
+                                <a href="<?=Url::to(['user/create'])?>">新增用户</a>
                             </li>
                             <li>
                                 <a href="login.html">角色设置</a>
