@@ -13,8 +13,11 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
+define('FORCE',(YII_ENV == 'dev')?true:false);
+
 class AppAsset extends AssetBundle
 {
+
     public $sourcePath = '@backend/assets/dist';
    // public $baseUrl = '@web';
     public $css = [
@@ -23,6 +26,9 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/sb-admin-2.js',
+    ];
+    public $publicOptions = [
+            'forceCopy' => FORCE,
     ];
     public $depends = [
         'yii\web\JQueryAsset',
