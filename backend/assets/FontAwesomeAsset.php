@@ -13,16 +13,15 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class MetisMenuAsset extends AssetBundle
+class FontAwesomeAsset extends AssetBundle
 {
-    public $basePath = '@bower/metisMenu/dist';
-    public $baseUrl = '@web';
+    public $sourcePath = '@bower/font-awesome';
+    //public $baseUrl = '@web';
     public $css = [
-        'metisMenu.min.css',
+        'css/font-awesome.min.css',
     ];
     public $js = [
-        'metisMenu.min.js',
-    ];
+     ];
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',

@@ -15,22 +15,21 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@backend/assets/dist';
+   // public $baseUrl = '@web';
     public $css = [
-        'css/metisMenu.min.css',
         'css/sb-admin-2.css',
-        'css/font-awesome.min.css',
         'css/site.css',
     ];
     public $js = [
-        'js/metisMenu.min.js',
         'js/sb-admin-2.js',
     ];
     public $depends = [
         'yii\web\JQueryAsset',
-        'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        'backend\assets\MetisMenuAsset',
+        'backend\assets\FontAwesomeAsset',
+
     ];
 }

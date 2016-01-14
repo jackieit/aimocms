@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -43,6 +44,19 @@ return [
             ],
         ],
         */
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',   //使用php文件保存信息
+                    'basePath' => '@app/messages',  //php文件保存位置
+                    //'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        'app'   => 'app.php',
+                        'error' => 'error.php',
+                    ],
+                ],
+            ],
+        ],
     ],
     'language' => 'zh-CN',
 

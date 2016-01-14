@@ -6,5 +6,5 @@
  * Time: 上午10:26
  */
 return [
-    'Easy site cms' => '易站通 cms'
+   // 'Easy site cms' => '易站通 cms'
 ];
