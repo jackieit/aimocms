@@ -24,6 +24,15 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
+        $this->insert('{{$user}}',[
+            'id' => 1,
+            'username' => 'admin',
+            'auth_key' => 'EkmeWfKlpqsxdN53Jr_VeOgZkmePsuTM',
+            'password_hash' => '$2y$13$eGk3JW51BFokL1QpXeF.xO7AluEPF8E54WuUMKpXYAygb9DEGGhsC',
+            'email'=> 'w@vlongbiz.com',
+            'created_at'  => time(),
+            'updated_at'  => time(),
+        ]);
     }
 
     public function down()
