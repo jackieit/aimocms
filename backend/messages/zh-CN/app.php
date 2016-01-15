@@ -29,4 +29,12 @@ return [
     'User Form' => '',
     'Search' => '搜索',
     'Reset'  => '重置',
+    'controllers' => '控制器',
+    'actions'     => '动作',
+    'Cat ID'      => '分类',
+    'Name'        => '名称',
+    'Rules'       => '权限ruleClass',
+    'Description' => '描述',
+    'Auth Roles'   => '角色权限',
+    'Create Auth Role' => '创建角色权限'
 ];

@@ -27,9 +27,9 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/sb-admin-2.js',
     ];
-    public $publicOptions = [
-            'forceCopy' => FORCE,
-    ];
+
+    public $publishOptions = ['forceCopy' => FORCE];
+
     public $depends = [
         'yii\web\JQueryAsset',
         'yii\bootstrap\BootstrapAsset',

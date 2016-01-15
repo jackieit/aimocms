@@ -311,7 +311,7 @@ AppAsset::register($this);
                                 <a href="<?=Url::to(['user/create'])?>">新增用户</a>
                             </li>
                             <li>
-                                <a href="login.html">角色设置</a>
+                                <a href="<?=Url::to(['role/index'])?>">角色设置</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
