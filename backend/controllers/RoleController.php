@@ -163,7 +163,7 @@ class RoleController extends Controller
      *
      * @return mixed
      */
-    public function actionGetAction($controller)
+    public function actionGetActions($controller)
     {
         $controllerfile = Yii::getAlias($controller);
         $actions = [];
@@ -176,10 +176,16 @@ class RoleController extends Controller
         $namespaceClass = str_replace('/','\\',trim($controller,'@.php'));
 
         $reflector = new \ReflectionClass($namespaceClass);
-        $properties = $reflector->getMethods();
-
-        var_dump($properties);
-
+        
+        $actions = array_keys($this->actions());
+        $methods = $reflector->getMethods();
+        foreach($methods as $m){
+            if(preg_match('/^action(.*)$/', $m->name)){
+                $actions[] = $m->name;
+            }
+        }
+        
+        return $actions;
     }
     /**
      * Get all controllers
