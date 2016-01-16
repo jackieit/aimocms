@@ -15,18 +15,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Auth Role'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'List Auth Category'), ['category-list'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'cat_id',
+           // 'id',
+            [
+                'attribute'=>'authCategory.name',
+                'label' => Yii::t('app','Category Name'),
+            ],
             'name',
             'description',
-            'controllers:ntext',
-            // 'actions:ntext',
+            //'controllers:ntext',
+            //'actions:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

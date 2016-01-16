@@ -13,6 +13,7 @@ return [
     'Create'     => '创建',
     'Update'     => '更新',
     'Delete'     => '删除',
+    'View'       => '查看',
     //user model
     'Username' =>'用户名',
     'Auth Key' => '认证密钥',
@@ -36,5 +37,10 @@ return [
     'Rules'       => '权限ruleClass',
     'Description' => '描述',
     'Auth Roles'   => '角色权限',
-    'Create Auth Role' => '创建角色权限'
+    'List Auth Roles'   => '角色权限',
+    'Create Auth Role' => '创建角色权限',
+    'Category Name' => '权限分类名称',
+    'List Auth Category'   => '权限分类',
+    'Update Auth Category' => '更新权限分类',
+    'Update Auth Role: ' => '更新角色权限',
 ];

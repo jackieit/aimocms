@@ -32,7 +32,7 @@ class AuthRole extends \yii\db\ActiveRecord
         return [
             [['cat_id'], 'integer'],
             [['cat_id','name','description'],'required'],
-            [['controllers', 'actions'], 'string'],
+            [['controllers', 'actions'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['rules'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 80],
@@ -52,6 +52,70 @@ class AuthRole extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'controllers' => Yii::t('app', 'controllers'),
             'actions' => Yii::t('app', 'actions'),
+            'authCategroy.name'=> Yii::t('app','Category Name')
         ];
+    }
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $this->controllers = trim(implode(',',$this->controllers),',');
+
+            $this->actions     = trim(implode(',',$this->actions),',');
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+
+           $auth = Yii::$app->authManager;
+           $permission = $auth->getPermission($this->name);
+           // var_dump($permission);
+           if($permission){
+               $auth->remove($permission);
+           }
+           $ruleClass = $this->rules;
+           $rule = null;
+           if(!empty($this->rules)){
+
+               $rule = new $ruleClass;
+               $auth->add($rule);
+           }
+           $permission = $auth->createPermission($this->name);
+           $permission->description = $this->description;
+           if(!empty($rule) && isset($rule->name)){
+               $permission->ruleName = $rule->name;
+           }
+           $permission->data = $this->controllers.'|'.$this->actions;
+
+           $auth->add($permission);
+
+           parent::afterSave($insert, $changedAttributes);
+
+        return true;
+
+    }
+
+    /**
+     *
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $auth = Yii::$app->authManager;
+        $permission = $auth->getPermission($this->name);
+        $auth->remove($permission);
+    }
+    public function getAuthCategory()
+    {
+        return $this->hasOne(AuthCategory::className(),['id'=>'cat_id']);
     }
 }

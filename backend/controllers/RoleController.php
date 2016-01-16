@@ -7,6 +7,7 @@ use Yii;
 use backend\models\AuthRole;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,17 +38,29 @@ class RoleController extends Controller
      */
     public function actionIndex()
     {
-        $controllers = $this->getControllers();
-        var_dump($controllers);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => AuthRole::find(),
+            'query' => AuthRole::find()->with('authCategory')->orderBy(['cat_id'=>SORT_ASC]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
+    /**
+     * Lists all AuthRole category models.
+     * @return mixed
+     */
+    public function actionCategoryList()
+    {
+         $dataProvider = new ActiveDataProvider([
+            'query' => AuthCategory::find(),
+        ]);
 
+        return $this->render('category-list', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Displays a single AuthRole model.
      * @param integer $id
@@ -70,7 +83,7 @@ class RoleController extends Controller
         $model = new AuthRole();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -87,7 +100,7 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        //$model->controllers = explode(',',$model->controllers);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -109,7 +122,18 @@ class RoleController extends Controller
 
         return $this->redirect(['index']);
     }
+    /**
+     * Deletes an existing AuthRoleCategory model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionCategoryDelete($id)
+    {
+        AuthCategory::findOne($id)->delete();
 
+        return $this->redirect(['category-list']);
+    }
     /**
      * Finds the AuthRole model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -130,7 +154,7 @@ class RoleController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreateCate()
+    public function actionCategoryCreate()
     {
         $model = new AuthCategory();
         $response =  Yii::$app->response;
@@ -146,7 +170,7 @@ class RoleController extends Controller
                 $response->format = $response::FORMAT_JSON;
                 return $result;
             }else{
-                return $this->redirect(['view', 'id' => $model->id]);
+                //return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             if(Yii::$app->request->isAjax) {
@@ -158,6 +182,26 @@ class RoleController extends Controller
             ]);
         }
     }
+    public function actionCategoryEdit($id)
+    {
+        $model = AuthCategory::findOne($id);
+        //$model->findOne($id);
+        $response =  Yii::$app->response;
+        $result['success'] = 0;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if(Yii::$app->request->isAjax){
+
+                $result = [
+                    'success'=> 1,
+                ];
+                $response->format = $response::FORMAT_JSON;
+                return $result;
+            }else{
+                //return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+        return $result;
+    }
     /**
      * Get all actions by $controller
      *
@@ -165,21 +209,29 @@ class RoleController extends Controller
      */
     public function actionGetAction($controller)
     {
-        $controllerfile = Yii::getAlias($controller);
+
+        $slash = strpos($controller,'/');
+        $module = substr($controller,0,$slash);
+        $controller_file = Yii::getAlias($controller);
         $actions = [];
         $response = Yii::$app->response;
         $response->format = $response::FORMAT_JSON;
-        if(!is_file($controllerfile)){
+        if(!is_file($controller_file)){
             return $actions;
         }
+        $id = Inflector::camel2id(substr(basename($controller_file), 0, -14));
 
         $namespaceClass = str_replace('/','\\',trim($controller,'@.php'));
-
         $reflector = new \ReflectionClass($namespaceClass);
-        $properties = $reflector->getMethods();
-
-        var_dump($properties);
-
+        $methods = $reflector->getMethods();
+        foreach($methods as $method){
+            $name = $method->getName();
+            if($method->isPublic() && !$method->isStatic() && strpos($name, 'action') === 0 && $name !== 'actions'){
+                $action =substr($name,6);
+                $actions[] = $module.'/'.$id.'/'.Inflector::camel2id($action);
+            }
+        }
+        return $actions;
     }
     /**
      * Get all controllers
