@@ -10,7 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="site-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' =>[
+            'class' => 'form-horizontal'
+        ]
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
