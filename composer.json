@@ -1,16 +1,16 @@
 {
     "name": "aimosoft/aimocms",
-    "description": "A cms developed by yii2,used for company web site",
+    "description": "A cms developed by yii2,used for group company web site or portal",
     "keywords": ["yii2", "cms", "aimocms"],
     "homepage": "http://www.aimosoft.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/jackieit/aimocms/issues",
+        "forum": "todo",
+        "wiki": "https://github.com/jackieit/aimocms/wiki",
+        "irc": "todo",
+        "source": "https://github.com/jackieit/aimocms"
     },
     "minimum-stability": "dev",
     "require": {
