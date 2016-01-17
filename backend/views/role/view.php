@@ -13,7 +13,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 <div class="auth-role-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-success']) ?>
 
+    </p>
 
     <?= DetailView::widget([
         'model' => $model,

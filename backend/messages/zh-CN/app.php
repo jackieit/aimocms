@@ -43,4 +43,5 @@ return [
     'List Auth Category'   => '权限分类',
     'Update Auth Category' => '更新权限分类',
     'Update Auth Role: ' => '更新角色权限',
+    'Back'  => '返回',
 ];

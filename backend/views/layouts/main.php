@@ -255,7 +255,10 @@ AppAsset::register($this);
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> 站点管理<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">华建铝业</a>
+                                <a href="<?=Url::to(['site/list'])?>">所有站点</a>
+                            </li>
+                            <li>
+                                <a href="<?=Url::to(['site/create'])?>">新建站点</a>
                             </li>
                             <li>
                                 <a href="#">潍柴动力</a>
@@ -301,7 +304,7 @@ AppAsset::register($this);
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#"><i class="fa fa-user fa-fw"></i>用户相关<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>

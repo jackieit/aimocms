@@ -27,6 +27,7 @@ class RoleController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'category-delete' =>['POST'],
                 ],
             ],
         ];
@@ -241,14 +242,11 @@ class RoleController extends Controller
     {
         $controller_path = ['@backend/controllers','@frontend/controllers'];
         $files = [];
-        $basePath = '';
         foreach($controller_path as $location){
             $root   = Yii::getAlias($location);
             $handle = opendir($root);
             while (($path = readdir($handle)) !== false) {
-                if ($path === '.git' || $path === '.svn' || $path === '.' || $path === '..') {
-                    continue;
-                }
+
                 if(strpos($path,'Controller')===false)
                     continue;
 

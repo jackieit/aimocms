@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\UserForm */
+/* @var $model common\models\Site */
 
-$this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Forms'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sites'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-form-view">
+<div class="site-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,14 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'username',
-            //'auth_key',
-            'password_hash',
-            //'password_reset_token',
-            'email:email',
-            'status',
-            'created_at:datetime',
-            'updated_at:datetime',
+            'name',
+            'template',
+            'is_publish',
+            'path',
+            'dsn',
+            'url:url',
+            'res_path',
+            'res_url:url',
+            'page_404',
+            'beian',
+            'seo_title',
+            'seo_keyword',
+            'seo_description',
         ],
     ]) ?>
 

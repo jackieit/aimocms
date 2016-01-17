@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AuthRole */
+/* @var $model common\models\Site */
 
-$this->title = Yii::t('app', 'Create Auth Role');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Auth Roles'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Site');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sites'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="auth-role-create">
+<div class="site-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
