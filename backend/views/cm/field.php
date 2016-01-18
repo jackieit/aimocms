@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+
 $this->title = Yii::t('app','Field list view');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app','Content Model'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $cm->name,'url'=>['view','id'=>$cm->id]];
@@ -13,7 +14,6 @@ $this->params['breadcrumbs'][] = ['label' => $cm->name,'url'=>['view','id'=>$cm-
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cm-index">
-
 
     <p>
         <?= Html::a(Yii::t('app','Create Field'), ['field-create','cm_id'=>$cm->id], ['class' => 'btn btn-success']) ?>

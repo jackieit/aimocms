@@ -17,27 +17,21 @@ use yii\web\AssetBundle;
 defined('FORCE') or define('FORCE', (YII_ENV == 'dev')?true:false);
 
 
-class AppAsset extends AssetBundle
+class AutoCompleteAsset extends AssetBundle
 {
 
     public $sourcePath = '@backend/assets/dist';
    // public $baseUrl = '@web';
     public $css = [
-        'css/sb-admin-2.css',
-        'css/site.css',
+
     ];
     public $js = [
-        'js/sb-admin-2.js',
+        'js/jquery.autocomplete.min.js',
     ];
 
     public $publishOptions = ['forceCopy' => FORCE];
 
     public $depends = [
-        'yii\web\JQueryAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
-        'backend\assets\MetisMenuAsset',
-        'backend\assets\FontAwesomeAsset',
-
+        'yii\web\JQueryAsset'
     ];
 }

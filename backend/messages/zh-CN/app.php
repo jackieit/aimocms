@@ -95,4 +95,5 @@ return [
     'Field Input Form' => '输入表单',
     'Field Source' => '数据源',
     'Field Rules' => '验证规则',
+    'This table has already been taken.' => '此表名称已经被占用，请重试'
 ];

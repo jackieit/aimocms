@@ -40,8 +40,9 @@ class Cm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','tab','is_inner','tab_index'],'required','on'=>['create','update']],
+            [['name','tab','tab_index'],'required','on'=>['create','update']],
             [['is_inner', 'site_id', 'tab_index'], 'integer'],
+            ['tab', 'unique', 'targetClass' => '\common\models\Cm', 'message' => Yii::t('app','This table has already been taken.'),'on'=>'create'],
             [['name', 'tab'], 'string', 'max' => 45],
         ];
     }
@@ -62,7 +63,19 @@ class Cm extends \yii\db\ActiveRecord
 
         ];
     }
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+            $this->is_inner = 2;
+            if(empty($this->site_id)){
+                $this->site_id = 0;
+            }
+            return true;
+        }else{
+            return false;
 
+        }
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

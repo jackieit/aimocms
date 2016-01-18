@@ -45,7 +45,16 @@ class m160113_022635_init_cms extends Migration
             'seo_description' => $this->string(120)->notNull()->defaultValue('')." COMMENT 'SEO描述'",
 
         ],$tableComment);
-
+        //insert default site data
+        $this->insert('{{%site}}',[
+            'id'        => '1',
+            'name'      => '默认站点',
+            'template'  => 'default',
+            'is_publish' => '0',
+            'url'       => '@web',
+            'res_path'  => ' @frontend/web/static',
+            'res_url'   => '@web/static/',
+        ]);
         $tableComment = $tableOptions." COMMENT '站点域名表'";
 
         $this->createTable('{{%domain}}',[
@@ -60,6 +69,16 @@ class m160113_022635_init_cms extends Migration
                 ON DELETE CASCADE
                 ON UPDATE CASCADE ',
         ],$tableComment);
+        //insert default site domain
+        $this->batchInsert('{{%domain}}',[
+                'site_id','domain','main'
+            ],
+            [
+                [1 ,'www.example.com',1],
+                [1, 'example.com',0],
+            ]
+        );
+
 
         $tableComment = $tableOptions." COMMENT '站点设置表'";
         $this->createTable('{{%site_config}}',[
@@ -107,6 +126,7 @@ class m160113_022635_init_cms extends Migration
             'hint'    => $this->string(45)->notNull()->defaultValue('')."  COMMENT '字段描述'",
             'data_type'  => $this->string(45)->notNull()->defaultValue('')."  COMMENT '数据类型'",
             'length'   => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '字段长度'",
+            'sort'     => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '排序'",
             'input'    => $this->string(45)->notNull()->defaultValue('')."  COMMENT '表单输入类型'",
             'source'   => $this->text()."  COMMENT '数据来源'",
             'rules'    => $this->text()."  COMMENT '数据来源'",

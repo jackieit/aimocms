@@ -52,7 +52,10 @@ class CmController extends Controller
     {
         $cm  = Cm::findOne($id);
         $dataProvider = new ActiveDataProvider([
-            'query' => CmField::find()->where(['cm_id'=>$id]),
+            'query' => CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_DESC]),
+            'pagination'=>[
+                'pageSize' => 100
+            ]
         ]);
 
         return $this->render('field', [
@@ -67,6 +70,7 @@ class CmController extends Controller
     public function actionFieldCreate($cm_id)
     {
         $model = new CmField();
+
         $model->cm_id = $cm_id;
         $cm  = Cm::findOne($cm_id);
         if ($model->load(Yii::$app->request->post())) {
@@ -106,6 +110,7 @@ class CmController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //var_dump($model->getErrors());
             return $this->render('create', [
                 'model' => $model,
             ]);

@@ -35,7 +35,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index','create','list','delete','view','update'],
+                        'actions' => ['logout', 'index','create','list','delete','view','update','get-sites'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -175,7 +175,28 @@ class SiteController extends Controller
             ]);
         }
     }
+    public function actionGetSites($q)
+    {
+        $query = Site::find()->select(['s.id','s.name'])->from(['s'=>Site::tableName()]);
+        if(empty($q)){
+            $query->andWhere(['or',
+            ['like','s.name',$q]
+            ]);
+        }
+        $list = $query->all();
+        $result = [];
+        foreach($list as $site){
+            $domain_arr = ArrayHelper::getColumn($site->domains,'domain');
 
+            $result[] = [
+                'value' => $site->name."|".implode('|',$domain_arr),
+                'data'  => $site->id
+            ];
+        }
+        $response = Yii::$app->response;
+        $response->format = $response::FORMAT_JSON;
+        return $result;
+    }
     public function actionLogout()
     {
         Yii::$app->user->logout();
