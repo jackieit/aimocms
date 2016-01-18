@@ -1,5 +1,5 @@
 <?php
-namespace backend/helpers;
+namespace backend\helpers;
 use Yii;
 
 //Unify json response format(e.g., return ResponseJSON::success();)
@@ -27,7 +27,7 @@ class ResponseJSON
     return $this->res($data, $url, $msg, $status);
   }
   
-  public static function successWithMsg($msg = self::$defaultSuccessMessage, $data = [], $url = '', $status = 0){
+  public static function successWithMsg($msg = self::$defaultSuccessMessage, $data = [], $url = '', $status = 1){
     return $this->res($data, $url, $msg, $status);
   }
   
@@ -35,7 +35,7 @@ class ResponseJSON
     return $this->res($data, $url, $msg, $status);
   }
   
-  public static function successWithUrl($url = '', $msg = self::$defaultSuccessMessage, $data = [], $status = 0){
+  public static function successWithUrl($url = '', $msg = self::$defaultSuccessMessage, $data = [], $status = 1){
     return $this->res($data, $url, $msg, $status);
   }
   
