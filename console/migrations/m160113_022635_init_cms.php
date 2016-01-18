@@ -51,6 +51,7 @@ class m160113_022635_init_cms extends Migration
         $this->createTable('{{%domain}}',[
             'id'      => $this->primaryKey(),
             'site_id' => $this->integer()->notNull()->defaultValue(0)." COMMENT '站点ID'",
+            'domain' => $this->string(80)->notNull()->defaultValue('')." COMMENT '域名'",
             'main'    => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否主域名'",
             ' key(`site_id`)',
             'CONSTRAINT {{%domain}}

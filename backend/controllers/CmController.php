@@ -1,20 +1,19 @@
 <?php
+
 namespace backend\controllers;
 
-use common\models\Domain;
-use Faker\Documentor;
+use common\models\CmField;
 use Yii;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
-use common\models\LoginForm;
-use yii\filters\VerbFilter;
-use common\models\Site;
+use common\models\Cm;
 use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
 /**
- * Site controller
+ * CmController implements the CRUD actions for Cm model.
  */
-class SiteController extends Controller
+class CmController extends Controller
 {
     /**
      * @inheritdoc
@@ -22,67 +21,69 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => [ 'index'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index','create','list','delete','view','update'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
-
-    public function actionIndex()
-    {
-        return $this->render('dashboard');
-    }
-    /**
-     * Lists all Site models.
+     * Lists all Cm models.
      * @return mixed
      */
-    public function actionList()
+    public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Site::find(),
+            'query' => Cm::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
+    /**
+     * Lists all Cm models fields.
+     * @return mixed
+     */
+    public function actionField($id)
+    {
+        $cm  = Cm::findOne($id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => CmField::find()->where(['cm_id'=>$id]),
+        ]);
+
+        return $this->render('field', [
+            'dataProvider' => $dataProvider,
+            'cm' => $cm,
+        ]);
+    }
+    /**
+     * create models fields.
+     * @return mixed
+     */
+    public function actionFieldCreate($cm_id)
+    {
+        $model = new CmField();
+        $model->cm_id = $cm_id;
+        $cm  = Cm::findOne($cm_id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('field-create', [
+            'model' => $model,
+            'cm'    => $cm
+        ]);
+    }
 
     /**
-     * Displays a single Site model.
+     * Displays a single Cm model.
      * @param integer $id
      * @return mixed
      */
@@ -94,14 +95,14 @@ class SiteController extends Controller
     }
 
     /**
-     * Creates a new Site model.
+     * Creates a new Cm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model  = new Site();
-
+        $model = new Cm();
+        $model->scenario = 'create';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -112,7 +113,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Updates an existing Site model.
+     * Updates an existing Cm model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -120,8 +121,7 @@ class SiteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $domains = ArrayHelper::getColumn($model->domains,'domain');
-        $model->domain_txt = implode("\r\n",$domains);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -132,7 +132,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Deletes an existing Site model.
+     * Deletes an existing Cm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -145,41 +145,18 @@ class SiteController extends Controller
     }
 
     /**
-     * Finds the Site model based on its primary key value.
+     * Finds the Cm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Site the loaded model
+     * @return Cm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Site::findOne($id)) !== null) {
+        if (($model = Cm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    public function actionLogin()
-    {
-        $this->layout = false;
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
     }
 }

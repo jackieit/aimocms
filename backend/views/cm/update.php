@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Site */
+/* @var $model common\models\Cm */
 
-$this->title = Yii::t('app', 'Update Site:') . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sites'), 'url' => ['index']];
+$this->title = Yii::t('app','Update Cm: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Content Model'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app','Update');
 ?>
-<div class="site-update">
+<div class="cm-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

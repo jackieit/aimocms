@@ -21,4 +21,4 @@ a.desc:after {content: /*"\e114"*/ "\e152";  }
 .grid-view .filters select {min-width: 50px;  }
 .hint-block {display: block;margin-top: 5px;color: #999;  }
 .error-summary {color: #a94442;background: #fdf7f7;border-left: 3px solid #eed3d7;padding: 10px 20px;margin: 0 0 15px 0;  }
-.input-group.auth-cate .input-group-addon { cursor: pointer;}
+.input-group.auth-cate .input-group-addon { cursor: pointer;position: absolute ;position: relative}

@@ -30,6 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            [
+                'attribute'=>'domain_txt',
+                'value'   =>  implode(',',\yii\helpers\ArrayHelper::getColumn($model->domains,'domain')),
+            ],
             'template',
             'is_publish',
             'path',

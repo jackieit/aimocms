@@ -27,6 +27,8 @@ use Yii;
  */
 class Site extends \yii\db\ActiveRecord
 {
+    public $domain_txt;
+
     /**
      * @inheritdoc
      */
@@ -42,6 +44,7 @@ class Site extends \yii\db\ActiveRecord
     {
         return [
             [['is_publish'], 'integer'],
+            [['name','template','url','domain_txt'],'required'],
             [['name', 'seo_title'], 'string', 'max' => 80],
             [['template'], 'string', 'max' => 30],
             [['path', 'dsn', 'url', 'res_path', 'res_url', 'seo_description'], 'string', 'max' => 120],
@@ -70,9 +73,55 @@ class Site extends \yii\db\ActiveRecord
             'seo_title' => Yii::t('app', 'Seo Title'),
             'seo_keyword' => Yii::t('app', 'Seo Keyword'),
             'seo_description' => Yii::t('app', 'Seo Description'),
+            'domain_txt' => Yii::t('app','Domain'),
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert,$changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $domain = preg_split("/\r\n/isU",trim($this->domain_txt));
 
+        $site_id = $this->getPrimaryKey();
+        $domains = Domain::find()->where(['site_id' => $site_id])->all();
+        foreach($domain as $key => $dm){
+            $dm = trim($dm);
+            if(empty($dm))
+                continue;
+            $domain_model = $this->findModelByDomain($domains,$dm);
+            if(!isset($domain_model)){
+                $domain_model = new Domain();
+            }
+            if($key===0){
+                $domain_model->main = 1;
+            }else{
+                $domain_model->main = 0;
+            }
+            $domain_model->domain = $dm;
+            $domain_model->site_id = $this->id;
+            $domain_model->save();
+        }
+
+
+    }
+
+    /**
+     * @inheritdoc
+     * @return common\models\Domain
+     */
+    public function findModelByDomain($models,$domain)
+    {
+        if($models ===null)
+            return null;
+        foreach($models as $model){
+            if($model->domain === $domain){
+                return $model;
+            }
+        }
+        return null;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

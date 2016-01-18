@@ -295,10 +295,10 @@ AppAsset::register($this);
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> 内容模型管理<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">内容模型</a>
+                                <a href="<?=Url::to(['cm/index'])?>">内容模型</a>
                             </li>
                             <li>
-                                <a href="buttons.html">新增模型</a>
+                                <a href="<?=Url::to(['cm/create'])?>">新增模型</a>
                             </li>
 
                         </ul>
@@ -342,7 +342,9 @@ AppAsset::register($this);
                     ]);?>
                 </div>
                 <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
                 <?=$content?>
+                </div>
             </div>
             <!-- /.row -->
         </div>
