@@ -2,10 +2,11 @@
 
 namespace backend\controllers;
 
-use common\models\CmField;
+use backend\models\CmField;
 use Yii;
-use common\models\Cm;
+use backend\models\Cm;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,7 @@ class CmController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'field-delete' => ['POST']
                 ],
             ],
         ];
@@ -51,8 +53,19 @@ class CmController extends Controller
     public function actionField($id)
     {
         $cm  = Cm::findOne($id);
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $fids  = ArrayHelper::getValue($post,'fid');
+            $sort  = ArrayHelper::getValue($post,'sort');
+            foreach($fids as $k => $fid){
+                $fm = $this->findFieldModel($fid);
+                $fm->scenario = 'sort';
+                $fm->sort = (int)$sort[$k];
+                $fm->save();
+            }
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_DESC]),
+            'query' => CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_ASC]),
             'pagination'=>[
                 'pageSize' => 100
             ]
@@ -70,14 +83,12 @@ class CmController extends Controller
     public function actionFieldCreate($cm_id)
     {
         $model = new CmField();
-
+        $model->scenario = 'create';
         $model->cm_id = $cm_id;
         $cm  = Cm::findOne($cm_id);
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            return $this->redirect(['field','id'=>$cm_id]);
         }
 
         return $this->render('field-create', [
@@ -85,7 +96,37 @@ class CmController extends Controller
             'cm'    => $cm
         ]);
     }
+    /**
+     * create models fields.
+     * @return mixed
+     */
+    public function actionFieldUpdate($id)
+    {
+        $model = $this->findFieldModel($id);
+        $model->scenario = 'update';
+        $cm  = Cm::findOne($model->cm_id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            return $this->redirect(['field','id'=>$model->cm_id]);
+        }
+
+        return $this->render('field-create', [
+            'model' => $model,
+            'cm'    => $cm
+        ]);
+    }
+    /**
+     * Deletes an existing Cm model field.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionFieldDelete($id,$cm_id)
+    {
+        $this->findFieldModel($id)->delete();
+
+        return $this->redirect(['field','id'=>$cm_id]);
+    }
     /**
      * Displays a single Cm model.
      * @param integer $id
@@ -107,6 +148,7 @@ class CmController extends Controller
     {
         $model = new Cm();
         $model->scenario = 'create';
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -126,7 +168,7 @@ class CmController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->scenario = 'update';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -159,6 +201,21 @@ class CmController extends Controller
     protected function findModel($id)
     {
         if (($model = Cm::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    /**
+     * Finds the Cm field model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return CmField the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findFieldModel($id)
+    {
+        if (($model = CmField::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

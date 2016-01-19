@@ -9,10 +9,7 @@ namespace backend\assets;
 
 use yii\web\AssetBundle;
 
-/**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
+
 class FontAwesomeAsset extends AssetBundle
 {
     public $sourcePath = '@bower/font-awesome';

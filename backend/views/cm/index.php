@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+use backend\models\Cm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -15,8 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app','Create Cm'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>
-    <?= GridView::widget([
+     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -28,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'is_inner',
                 'value'    => function($model)
                 {
-                    $is_inner = \common\models\Cm::IS_INNER();
+                    $is_inner = Cm::IS_INNER();
                     return $is_inner[$model->is_inner];
                 }
             ],
@@ -37,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'tab_index',
                 'value'    => function($model)
                 {
-                    $tab_index = \common\models\Cm::$TAB_INDEX;
+                    $tab_index = Cm::$TAB_INDEX;
                     return $tab_index[$model->tab_index];
                 }
             ],
@@ -48,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                      'update' => function($url,$model,$key){
                          if($model->is_inner==1) return '';
                          else
-                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['update','id'=>$model->id,'title'=>Yii::t('app','View')]);
+                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['update','id'=>$model->id],['title'=>Yii::t('app','View')]);
                      },
                      'field' => function($url,$model,$key){
 
@@ -73,4 +72,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+
+</div>

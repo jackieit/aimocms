@@ -19,3 +19,9 @@ $this->params['breadcrumbs'][] = Yii::t('app','Update');
     ]) ?>
 
 </div>
+<?php
+$js = <<<JS
+$('#site_txt,#cm-tab_index,#cm-tab').attr('disabled',true);
+JS;
+$this->registerJs($js);
+?>

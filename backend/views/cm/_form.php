@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\models\Cm;
+use backend\models\Cm;;
 use backend\assets\AutoCompleteAsset;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -27,6 +27,8 @@ AutoCompleteAsset::register($this);
 
 
     <?= $form->field($model, 'tab_index')->dropDownList(Cm::$TAB_INDEX) ?>
+    <?= $form->field($model, 'title_field')->textInput() ?>
+    <?= $form->field($model, 'select_field')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Create') : Yii::t('app','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

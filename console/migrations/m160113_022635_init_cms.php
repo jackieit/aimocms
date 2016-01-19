@@ -105,6 +105,9 @@ class m160113_022635_init_cms extends Migration
             'is_inner'  => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否内置'",
             'site_id'   => $this->integer()->notNull()->defaultValue(0)." COMMENT '站点ID'",
             'tab_index' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '对应索引表'", //1 cm_index 2 user
+            'rules'    => $this->text()."  COMMENT '数据来源'",
+            'title_field'    => $this->text()."  COMMENT '标题字段'",
+            'select_field'  => $this->text()."  COMMENT '列表字段'",
 
         ],$tableComment);
         $this->insert('{{%cm}}',[
@@ -125,11 +128,10 @@ class m160113_022635_init_cms extends Migration
             'label'   => $this->string(45)->notNull()->defaultValue('')."  COMMENT '字段说明'",
             'hint'    => $this->string(45)->notNull()->defaultValue('')."  COMMENT '字段描述'",
             'data_type'  => $this->string(45)->notNull()->defaultValue('')."  COMMENT '数据类型'",
-            'length'   => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '字段长度'",
+            'length'   => $this->string(20)->notNull()->defaultValue('')." COMMENT '字段长度'",
             'sort'     => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '排序'",
             'input'    => $this->string(45)->notNull()->defaultValue('')."  COMMENT '表单输入类型'",
             'source'   => $this->text()."  COMMENT '数据来源'",
-            'rules'    => $this->text()."  COMMENT '数据来源'",
             'is_inner' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否内置'",
             'key cmid (`cm_id`)',
             'CONSTRAINT {{%cm_field}}
@@ -140,21 +142,21 @@ class m160113_022635_init_cms extends Migration
         ],$tableComment);
 
         $this->batchInsert('{{%cm_field}}',
-            ['cm_id','name','label','hint','data_type','length','input','source','rules','is_inner'],
+            ['cm_id','name','label','hint','data_type','length','input','source','is_inner'],
             [
-                [1,'title','标题','','varchar',80,'textInput','','',1],
-                [1,'color','标题颜色','','varchar',10,'textInput','','',1],
-                [1,'author','作者','','varchar',45,'textInput','','',1],
-                [1,'from'  ,'文章来源','','varchar',60,'textInput','','',1],
-                [1,'photo' ,'图片','','varchar',60,'textInput','','',1],
-                [1,'intro' ,'简介','','varchar',240,'textArea','','',1],
-                [1,'content','详细内容','','text',0,'textArea','','',1],
-                [1,'tpl_detail','详细内容模板','','text',0,'textArea','','',1],
-                [1,'file_name','文件名','','text',0,'textArea','','',1],
-                [1,'slug','固定连接','','text',0,'text','','',1],
-                [1,'seo_title','SEO标题','','varchar',80,'textInput','','',1],
-                [1,'seo_keyword','SEO关键字','','varchar',240,'textInput','','',1],
-                [1,'seo_description','SEO描述','','varchar',120,'textArea','','',1],
+                [1,'title','标题','','string',80,'textInput','',1],
+                [1,'color','标题颜色','','string',10,'textInput','',1],
+                [1,'author','作者','','string',45,'textInput','',1],
+                [1,'from'  ,'文章来源','','string',60,'textInput','',1],
+                [1,'photo' ,'图片','','string',60,'textInput','',1],
+                [1,'intro' ,'简介','','string',240,'textarea','',1],
+                [1,'content','详细内容','','text',0,'textarea','',1],
+                [1,'tpl_detail','详细内容模板','','text',0,'textarea','',1],
+                [1,'file_name','文件名','','text',0,'textarea','',1],
+                [1,'slug','固定连接','','text',0,'textInput','',1],
+                [1,'seo_title','SEO标题','','string',80,'textInput','',1],
+                [1,'seo_keyword','SEO关键字','','string',240,'textInput','',1],
+                [1,'seo_description','SEO描述','','string',120,'textarea','',1],
             ]
         );
         $tableComment = $tableOptions." COMMENT '结点分类表'";

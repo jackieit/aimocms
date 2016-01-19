@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use common\models\Cm;
+use backend\models\Cm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Cm */
 
