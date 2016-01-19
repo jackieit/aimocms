@@ -45,7 +45,7 @@ class Cm extends \yii\db\ActiveRecord
         return [
             [['name','tab','tab_index'],'required','on'=>['create','update']],
             [['is_inner', 'site_id', 'tab_index'], 'integer'],
-            ['tab', 'unique', 'targetClass' => '\common\models\Cm', 'message' => Yii::t('app','This table has already been taken.'),'on'=>'create'],
+            ['tab', 'unique', 'targetClass' => '\backend\models\Cm', 'message' => Yii::t('app','This table has already been taken.'),'on'=>'create'],
             [['rules','title_field','select_field'],'string'],
             [['name', 'tab'], 'string', 'max' => 45],
         ];
