@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                      'update' => function($url,$model,$key){
                          if($model->is_inner==1) return '';
                          else
-                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['update','id'=>$model->id],['title'=>Yii::t('app','View')]);
+                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['update','id'=>$model->id],['title'=>Yii::t('app','Update')]);
                      },
                      'field' => function($url,$model,$key){
 

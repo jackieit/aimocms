@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\CmField;
 /* @var $this yii\web\View */
-/* @var $model common\models\CmField */
+/* @var $model backend\models\CmField */
 /* @var $form ActiveForm */
 if($model->isNewRecord)
     $this->title = Yii::t('app','Create Field');

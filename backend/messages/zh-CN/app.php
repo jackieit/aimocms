@@ -87,7 +87,13 @@ return [
     'Field list view' => '列出字段',
     'Create Field' => '新增字段',
     'Update Field' => '更新字段',
-
+    'Create Field Index' => '创建索引',
+    'Select index field' => '选择索引字段',
+    'Content model rules' => '内容模型数据规则',
+    'Create Rule' => '新建规则',
+    'Create Default Rule' => '生成默认规则',
+    'Please create field first' => '请先生成字段后再生成规则',
+    'use yii2 rules from this field' => '按Yii2的validate Rule 规则填写<a href="http://www.yiiframework.com/doc-2.0/guide-input-validation.html" target="_blank">Yii2 Validating Input</a>',
     'Field Name' => '字段名称',
     'Field Label' => '字段说明',
     'Field Hint' => '输入说明',
@@ -127,7 +133,12 @@ return [
     'field input type richEditor'    => '富文本编辑器',
     'field input type datePicker'    => '日期选择器',
     'field input type datetimePicker' => '日期时间选择器',
-    'support key value pair per line or sql statement' => '支持每行一个键值对 "key=>value" 及SQL语句',
+    'support key value pair per line or sql statement' => '支持每行一个键值对 "key=>value" 及SQL语句 第一个字段为Key第二个字段为value',
     'useful for string and decimal datatype' => '仅对string和decimal数据类型时有效',
-    'Used for database table field name' => '用于数据库中表字段名称，修改时请慎重操作如果与上次名称不一致会修改数据库中字段名称'
+    'Used for database table field name' => '用于数据库中表字段名称，修改时请慎重操作如果与上次名称不一致会修改数据库中字段名称',
+    //setting Controller
+    'Settings' => '系统设置',
+    'Create Setting' => '添加设置',
+    'Setting Var' => '设置项目',
+    'Setting Val' => '值',
 ];

@@ -10,7 +10,7 @@ use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 //use yii;
 AppAsset::register($this);
-
+use yii\widgets\Pjax;
 //$this->title = 'Dashboard';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -320,7 +321,7 @@ AppAsset::register($this);
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-cogs fa-fw"></i> 系统设置</a>
+                        <a href="<?=Url::to(['setting/index'])?>"><i class="fa fa-cogs fa-fw"></i> 系统设置</a>
                     </li>
                     <li>
                         <a href="tables.html"><i class="fa fa-table fa-fw"></i> 日志管理</a>
@@ -342,9 +343,11 @@ AppAsset::register($this);
                     ]);?>
                 </div>
                 <!-- /.col-lg-12 -->
+                <?php Pjax::begin()?>
                 <div class="col-lg-12">
-                <?=$content?>
+                    <?=$content?>
                 </div>
+                <?php Pjax::end()?>
             </div>
             <!-- /.row -->
         </div>

@@ -152,12 +152,10 @@ class CmField extends \yii\db\ActiveRecord
 
         switch ($type){
             case 'integer':
-                $column = $mg->{$type}()->notNull()->defaultValue(0);
-                break;
             case 'smallInteger':
-                $column = $mg->{$type}()->notNull()->defaultValue(0);
-                break;
             case 'boolean':
+            case 'float':
+            case 'double':
                 $column = $mg->{$type}()->notNull()->defaultValue(0);
                 break;
             case 'string':
@@ -166,12 +164,7 @@ class CmField extends \yii\db\ActiveRecord
             case 'decimal':
                 $column = $mg->{$type}($this->length)->notNull()->defaultValue(0);
                 break;
-            case 'float':
-                $column = $mg->{$type}()->notNull()->defaultValue(0);
-                break;
-            case 'double':
-                $column = $mg->{$type}()->notNull()->defaultValue(0);
-                break;
+
             default:
                 $column = $mg->{$type}()->defaultValue(null);
                 break;

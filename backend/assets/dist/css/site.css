@@ -30,4 +30,4 @@ a.desc:after {content: /*"\e114"*/ "\e152";  }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 /* end*/
-.field-sort{width:60px;}
+input.form-control.field-sort{width:60px;  margin-left: 5px;}

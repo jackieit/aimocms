@@ -70,14 +70,19 @@ class Cm extends \yii\db\ActiveRecord
 
         ];
     }
-
+    public function hints()
+    {
+        return [
+            'rules' => 'rules'
+        ];
+    }
     /**
      * @return array
      */
     public function scenarios()
     {
         $scenario = parent::scenarios();
-        $scenario['update'] = ['name','title_field','select_field'];
+        $scenario['update'] = ['name','title_field','select_field','rules'];
         return $scenario;
     }
     public function beforeSave($insert)
@@ -127,10 +132,12 @@ class Cm extends \yii\db\ActiveRecord
             if ($migrate->db->driverName === 'mysql') {
                 $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
             }
-            $table = self::$TAB_PREFIX[$this->tab_index].$this->tab;
+
+            $table = self::getTable($this->tab_index,$this->tab);
             $tableOptions = $tableOptions." COMMENT '".Yii::t('app','Comment prefix').$this->name."'";
-            $migrate->createTable('{{%'.$table.'}}',[
-                'id' => $migrate->primaryKey()
+            $migrate->createTable($table,[
+                'id' => $migrate->primaryKey(),
+                 
             ],$tableOptions);
             return true;
         }
@@ -138,14 +145,24 @@ class Cm extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param $prefix
+     * @param $tab
+     * @return string
+     */
+    public static function getTable($prefix,$tab)
+    {
+        $table = self::$TAB_PREFIX[$prefix].$tab;
+        return '{{%'.$table.'}}';
+    }
+    /**
      * @inheritdoc
      */
     public function afterDelete()
     {
         parent::afterDelete();
         $migrate = new Migration();
-        $table   = self::$TAB_PREFIX[$this->tab_index].$this->tab;
-        $migrate->dropTable('{{%'.$table.'}}');
+        $table = self::getTable($this->tab_index,$this->tab);
+        $migrate->dropTable($table );
         //return true;
     }
     /**

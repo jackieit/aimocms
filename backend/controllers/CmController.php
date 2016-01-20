@@ -6,6 +6,7 @@ use backend\models\CmField;
 use Yii;
 use backend\models\Cm;
 use yii\data\ActiveDataProvider;
+use yii\db\Schema;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -53,8 +54,12 @@ class CmController extends Controller
     public function actionField($id)
     {
         $cm  = Cm::findOne($id);
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
+
+            $act   = ArrayHelper::getValue($post,'act');
+
             $fids  = ArrayHelper::getValue($post,'fid');
             $sort  = ArrayHelper::getValue($post,'sort');
             foreach($fids as $k => $fid){
@@ -63,6 +68,7 @@ class CmController extends Controller
                 $fm->sort = (int)$sort[$k];
                 $fm->save();
             }
+
         }
         $dataProvider = new ActiveDataProvider([
             'query' => CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_ASC]),
@@ -75,6 +81,62 @@ class CmController extends Controller
             'dataProvider' => $dataProvider,
             'cm' => $cm,
         ]);
+    }
+    public function actionRule($id)
+    {
+        $cm  = Cm::findOne($id);
+        $table_name = Cm::getTable($cm->tab_index,$cm->tab);
+
+        $table = Yii::$app->db->getTableSchema($table_name);
+        $types = [];
+        $lengths = [];
+        foreach ($table->columns as $column) {
+            if ($column->autoIncrement) {
+                continue;
+            }
+            if (!$column->allowNull && $column->defaultValue === null) {
+                $types['required'][] = $column->name;
+            }
+            switch ($column->type) {
+                case Schema::TYPE_SMALLINT:
+                case Schema::TYPE_INTEGER:
+                case Schema::TYPE_BIGINT:
+                    $types['integer'][] = $column->name;
+                    break;
+                case Schema::TYPE_BOOLEAN:
+                    $types['boolean'][] = $column->name;
+                    break;
+                case Schema::TYPE_FLOAT:
+                case 'double': // Schema::TYPE_DOUBLE, which is available since Yii 2.0.3
+                case Schema::TYPE_DECIMAL:
+                case Schema::TYPE_MONEY:
+                    $types['number'][] = $column->name;
+                    break;
+                case Schema::TYPE_DATE:
+                case Schema::TYPE_TIME:
+                case Schema::TYPE_DATETIME:
+                case Schema::TYPE_TIMESTAMP:
+                    $types['safe'][] = $column->name;
+                    break;
+                default: // strings
+                    if ($column->size > 0) {
+                        $lengths[$column->size][] = $column->name;
+                    } else {
+                        $types['string'][] = $column->name;
+                    }
+            }
+        }
+        $rules = [];
+        foreach ($types as $type => $columns) {
+            $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+        }
+        foreach ($lengths as $length => $columns) {
+            $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
+        }
+        $response  = Yii::$app->response;
+        $response->format = $response::FORMAT_RAW;
+
+        return  implode(",\n",$rules);
     }
     /**
      * create models fields.

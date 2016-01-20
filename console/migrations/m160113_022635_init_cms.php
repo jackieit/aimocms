@@ -19,6 +19,7 @@ class m160113_022635_init_cms extends Migration
         $this->createTable('{{%setting}}',[
             'var' => $this->string(45)->notNull()->defaultValue('')->unique()." COMMENT '变量'",
             'val' => $this->string(255)->notNull()->defaultValue('')." COMMENT '变量值'",
+            'is_inner' => $this->boolean()->notNull()->defaultValue(2)." COMMENT '是否内置'",
         ],$tableComment);
 
         //create site setting table
@@ -211,6 +212,7 @@ class m160113_022635_init_cms extends Migration
             'node_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '结点分类ID'",
             'parent_id'  => $this->integer()->notNull()->defaultValue(0)." COMMENT '父内容ID'",
              // 越小越靠前
+            'user_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '用户ID'",
             'top'    => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '置顶'",
             'pink'   => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '精华'",
             'sort'   => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '排序'",
@@ -219,7 +221,7 @@ class m160113_022635_init_cms extends Migration
             // 1 正常 <1 删除
             'state'  => $this->boolean()->notNull()->defaultValue(0)." COMMENT '状态'",
             'key `content`(`cm_id`,`node_id`,`content_id`)',
-            'key `sort` (`top` asc,`pink` asc ,`sort` asc,`updated_at` desc)',
+            'key `sort` (`user_id` asc ,`top` asc,`pink` asc ,`sort` asc,`updated_at` desc)',
 
         ],$tableComment);
         $tableComment = $tableOptions." COMMENT '操作记录表'";
@@ -256,6 +258,7 @@ class m160113_022635_init_cms extends Migration
 
 
         $this->dropTable('{{%node}}');
+        $this->dropTable('{{%log}}');
 
     }
 

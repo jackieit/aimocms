@@ -39,10 +39,16 @@ $is_inner  = cm::IS_INNER();
                 'attribute'=>'is_inner',
                 'value'    =>  $is_inner[$model->is_inner]
             ],
+
             'site.name',
             [
                 'attribute'=>'tab_index',
                 'value'    =>  $tab_index[$model->tab_index]
+            ],
+            [
+                'attribute'=>'rules',
+                'value'    => "<pre>".$model->rules."</pre>",
+                'format' => 'Html',
             ],
         ],
     ]) ?>

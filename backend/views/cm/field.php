@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' =>'sort',
                 'value' => function($model){
+                    //$checkbox = Html::checkbox('fields[]',null,['class'=>'from-control fields','value'=>$model->name]);
                     return Html::hiddenInput('fid[]',$model->id).Html::textInput('sort[]',$model->sort,['class'=>'form-control field-sort']);
                 },
                 'format' => 'raw',
@@ -98,7 +99,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <p>
-        <?= Html::submitButton(Yii::t('app','Field sort'),  ['class' => 'btn btn-danger']) ?>
+         <?= Html::submitButton(Yii::t('app','Field sort'),  ['class' => 'btn btn-danger','id'=>'btn-sort']) ?>
+
     </p>
     <?php ActiveForm::end();?>
 <?php Pjax::end(); ?></div>
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 
@@ -39,8 +39,8 @@ class Setting extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'var' => Yii::t('app', 'Var'),
-            'val' => Yii::t('app', 'Val'),
+            'var' => Yii::t('app', 'Setting Var'),
+            'val' => Yii::t('app', 'Setting Val'),
         ];
     }
 }
