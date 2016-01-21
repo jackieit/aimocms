@@ -15,3 +15,4 @@
 # 相关阅读
   [权限设计](docs/idea.md)  
   [功能需求](https://github.com/jackieit/aimocms/wiki/Requirements)
+  [投稿工作流](docs/workflow.md)
