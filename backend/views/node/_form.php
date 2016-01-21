@@ -51,7 +51,7 @@ $model->parent = 0;
 
     <?= $form->field($model, 'tpl_detail')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?php //$form->field($model, 'status')->textInput() ?>
 
     <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
 
@@ -67,8 +67,8 @@ $model->parent = 0;
 
 </div>
 <?php
-$data = json_encode(Node::getOptionList(0),JSON_UNESCAPED_UNICODE);
-
+$data = json_encode(Node::getSiteNodes($site_id),JSON_UNESCAPED_UNICODE);
+//$data = '[]';
 $js =<<<JS
 
 var nodeinfo = {$data};

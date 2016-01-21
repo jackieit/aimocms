@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Site;
 use Yii;
 use backend\models\Node;
 use yii\data\ActiveDataProvider;
@@ -33,14 +34,18 @@ class NodeController extends Controller
      * Lists all Node models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($site_id='1')
     {
+        $site = Site::findOne($site_id);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Node::find(),
+            'query' => Node::find()->where(['site_id'=>$site_id]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            //'site_id' => $site_id,
+            'site'  => $site,
         ]);
     }
 
@@ -64,12 +69,13 @@ class NodeController extends Controller
     public function actionCreate($site_id)
     {
         $model = new Node();
-        $model->site_id = $site_id;
+        $site = Site::findOne($site_id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'site' => $site,
             ]);
         }
     }

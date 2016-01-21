@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "{{%node}}".
  *
@@ -23,9 +23,12 @@ use Yii;
  * @property string $seo_keyword
  * @property string $seo_description
  */
-class Node extends \yii\db\ActiveRecord
+class Node extends ActiveRecord
 {
     public $parent_txt;
+    public static $list_nodes    =[];
+    public static $site_nodes    = [];
+    public static $site_children = [];
     /**
      * @return array
      */
@@ -84,30 +87,38 @@ class Node extends \yii\db\ActiveRecord
             'seo_description' => Yii::t('app', 'Seo Description'),
         ];
     }
+    public static function getSiteNodes($site_id)
+    {
+        self::$site_nodes = self::$site_children = [];
+        $result = self::find()->select(['id','parent','name'])->with()->where(['site_id'=>$site_id])
+        ->asArray()->all();
+        foreach($result as $row)
+        {
 
+            self::$site_nodes[$row['id']] = $row['name'];
+            self::$site_children[$row['id']][] = $row['parent'];
+        }
+
+        self::getOptionList($site_id,0,-1);
+
+        return self::$list_nodes;
+    }
     /**
      * @todo
      * @param $site_id
-     * @param $parent
-     * @return array
+     * @param $root
+     * @param $level
+     * @return void
      */
-    public static function getOptionList($site_id,$parent)
+    public static function getOptionList($site_id,$root=0, $level=-1)
     {
-        static $list = [];
-        $result = self::getDb()->cache(function($db){
-            return self::find()->asArray()->all();
-        });
-        foreach($result as $nodeinfo)
-        {
-            if($nodeinfo['parent'] == $parent){
-                $list[] =[ 'data' =>$nodeinfo['id'], 'value'=>$nodeinfo['id'].'|'.$nodeinfo['name']];
-            }else{
-                $parent_id = $nodeinfo['parent'];
-                $tmpList = self::getOptionList($parent_id);
-                $list = array_merge($tmpList,$list);
-            }
-        }
+         //$dependency = new FileDependency(['fileName' => '@runtime/node.txt']);
 
-        return $list;
+        if($root !=0){
+            self::$list_nodes[] =[ 'data' =>$root, 'value'=>str_repeat(' ', $level).$root.'|'.self::$site_nodes[$root]];
+        }
+        foreach (self::$site_children[$root] as $child)
+            self::getOptionList($site_id,$child, $level+1);
+
     }
 }

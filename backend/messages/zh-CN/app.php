@@ -148,7 +148,7 @@ return [
     'Node Is Real'    => '是否为实结点',
     'Node V Nodes'    => '虚结点ID',
     'Node Parent'     => '父结点',
-    'Node Slug'       => '固定链接',
+    'Node Slug'       => '固定链接(slug)',
     'Node Workflow'   => '投稿工作流',
     'Node Tpl Index'  => '首页模板',
     'Node Tpl Detail' => '详细内容页模板',
