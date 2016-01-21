@@ -237,6 +237,66 @@ class m160113_022635_init_cms extends Migration
             'key kind(`kind`)',
         ],$tableComment);
 
+        $tableComment = $tableOptions." COMMENT '工作流状态表'";
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_state}};");
+        $this->createTable("{{%workflow_state}}",[
+            'id'    => $this->primaryKey(),
+            'name'  => $this->string(45)->notNull()->defaultValue('')." COMMENT '步骤名称'",
+            'val'   => $this->boolean()->notNull()->defaultValue(0)." COMMENT '状态值'",
+            'is_inner' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否内置'",
+        ],$tableComment);
+        $this->batchInsert('{{%workflow_state}}',['id','name','val','is_inner'],[
+            [1,'新增',0,1],   [2,'删除',-1,1], [3,'已投搞',1,1],
+            [4,'被驳回',3,1], [5,'已录用',3,1],
+        ]);
+        $tableComment = $tableOptions." COMMENT '工作流表'";
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_step}};");
+
+        $this->execute("DROP TABLE IF EXISTS {{%workflow}};");
+        $this->createTable("{{%workflow}}",[
+            'id'    => $this->primaryKey(),
+            'name'  => $this->string(45)->notNull()->defaultValue('')." COMMENT '工作流名称'",
+            'intro' => $this->text()->defaultValue(null)." COMMENT '简介'",
+            'is_inner' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否内置'",
+        ],$tableComment);
+        $this->batchInsert('{{%workflow}}',['id','name','intro','is_inner'],[
+            [1,'投稿既发布','',1],
+            [2,'一级审核','投稿->编辑->审核发布',1],
+        ]);
+
+        $tableComment = $tableOptions." COMMENT '工作流表'";
+        $this->createTable("{{%workflow_step}}",[
+            'id'       => $this->primaryKey(),
+            'wf_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '工作流名称'",
+            'role_id'  => $this->integer()->notNull()->defaultValue(0)." COMMENT '角色ID'",
+            'name'  => $this->string(45)->notNull()->defaultValue('')." COMMENT '工作流操作名称'",
+            'before_state'  => $this->string(80)->notNull()->defaultValue(0)." COMMENT '操作之前值'",
+            'after_state'   => $this->string(80)->notNull()->defaultValue(0)." COMMENT '操作之后值'",
+            'append_note'   => $this->boolean()->notNull()->defaultValue(0)." COMMENT '操作后是否附加说明'",
+            'intro' => $this->text()->defaultValue(null)." COMMENT '简介'",
+            'CONSTRAINT {{%workflow_step}}
+                FOREIGN KEY (`wf_id`)
+                REFERENCES {{%workflow}} (`id`)
+                ON DELETE CASCADE
+                ON UPDATE CASCADE ',
+        ],$tableComment);
+        $this->batchInsert('{{%workflow_step}}',['id','wf_id','role_id','name','before_state','after_state','append_note','intro'],[
+            [1,'1',0,'投稿自动发布','1','2',0,''],
+            //todo
+        ]);
+        $tableComment = $tableOptions." COMMENT '工作流操作日志表'";
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_log}};");
+        $this->createTable("{{%workflow_log}}",[
+            'id'         => $this->primaryKey(),
+            'step_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '步骤ID'",
+            'content_id' => $this->integer()->notNull()->defaultValue(0)." COMMENT '关联内容ID'",
+            'node_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '结点分类ID'",
+            'note'       => $this->string(140)->defaultValue(null)." COMMENT '简介'",
+            'user_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '用户ID'",
+            'created_at' => $this->integer()->notNull()->defaultValue(0)." COMMENT '发布时间'",
+
+        ],$tableComment);
+
     }
 
 
@@ -245,20 +305,20 @@ class m160113_022635_init_cms extends Migration
      */
     public function down()
     {
-        $this->dropTable('{{%setting}}');
-        $this->dropTable('{{%domain}}');
-        $this->dropTable('{{%site_config}}');
-
-        $this->dropTable('{{%site}}');
-        $this->dropTable('{{%cm_field}}');
-
-        $this->dropTable('{{%cm}}');
-        $this->dropTable('{{%cm_article}}');
-        $this->dropTable('{{%cm_index}}');
-
-
-        $this->dropTable('{{%node}}');
-        $this->dropTable('{{%log}}');
+        $this->execute("DROP TABLE IF EXISTS {{%setting}};");
+        $this->execute("DROP TABLE IF EXISTS {{%domain}};");
+        $this->execute("DROP TABLE IF EXISTS {{%site_config}};");
+        $this->execute("DROP TABLE IF EXISTS {{%site}};");
+        $this->execute("DROP TABLE IF EXISTS {{%cm_field}};");
+        $this->execute("DROP TABLE IF EXISTS {{%cm}};");
+        $this->execute("DROP TABLE IF EXISTS {{%node}};");
+        $this->execute("DROP TABLE IF EXISTS {{%cm_article}};");
+        $this->execute("DROP TABLE IF EXISTS {{%cm_index}};");
+        $this->execute("DROP TABLE IF EXISTS {{%log}};");
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_state}};");
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_step}};");
+        $this->execute("DROP TABLE IF EXISTS {{%workflow}};");
+        $this->execute("DROP TABLE IF EXISTS {{%workflow_log}};");
 
     }
 

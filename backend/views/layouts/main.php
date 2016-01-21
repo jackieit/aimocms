@@ -281,10 +281,7 @@ use yii\widgets\Pjax;
                         <a href="#"><i class="fa fa-th-list fa-fw"></i> 栏目分类<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="flot.html">企业简介</a>
-                            </li>
-                            <li>
-                                <a href="morris.html">关于威龙</a>
+                                <a href="<?=Url::to(['node/index'])?>">栏目列表</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
