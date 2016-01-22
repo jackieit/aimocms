@@ -168,19 +168,24 @@ class m160113_022635_init_cms extends Migration
             'cm_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '内容模型ID'",
             'name'     => $this->string(20)->notNull()->defaultValue('')." COMMENT '结点名称'",
             'is_real'  => $this->boolean()->notNull()->defaultValue(0)."  COMMENT '实虚结点'",
-            'v_nodes'  => $this->text()." COMMENT '虚结点包含结点'",
+            'sort'     => $this->smallInteger()->notNull()->defaultValue(0)."  COMMENT '排序'",
+            'lft'      => $this->integer()->notNull()->defaultValue(0)."  COMMENT '左值'",
+            'rgt'      => $this->integer()->notNull()->defaultValue(0)."  COMMENT '右值'",
             'parent'   => $this->integer()->notNull()->defaultValue(0)." COMMENT '上级结点'",
+            'depth'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '级点深度'",
             'slug'     => $this->string(45)->notNull()->defaultValue(0)." COMMENT '英文标识slug'",
+            'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态'",
+            'v_nodes'  => $this->text()." COMMENT '虚结点包含结点'",
             'workflow' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '投稿工作流'",
             'tpl_index' => $this->string(45)->notNull()->defaultValue('')." COMMENT '首页模板'",
             'tpl_detail' => $this->string(45)->notNull()->defaultValue('')." COMMENT '详细内容页模板'",
-            'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态'",
             'seo_title'       => $this->string(80)->notNull()->defaultValue('')."  COMMENT 'SEO标题'",
             'seo_keyword'     => $this->string(240)->notNull()->defaultValue('')." COMMENT 'SEO关键字'",
             'seo_description' => $this->string(120)->notNull()->defaultValue('')." COMMENT 'SEO描述'",
 
 
         ],$tableComment);
+
 
         $tableComment = $tableOptions." COMMENT '文章内容表'";
 

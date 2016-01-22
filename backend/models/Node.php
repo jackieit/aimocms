@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "{{%node}}".
  *
@@ -23,25 +23,16 @@ use yii\db\ActiveRecord;
  * @property string $seo_keyword
  * @property string $seo_description
  */
-class Node extends ActiveRecord
+class Node extends \common\models\Node
 {
     public $parent_txt;
-    public static $list_nodes    =[];
-    public static $site_nodes    = [];
-    public static $site_children = [];
+
     /**
      * @return array
      */
     public static function isReal()
     {
         return ['1' => Yii::t('app','Yes'),'2'=>Yii::t('app','No')];
-    }
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%node}}';
     }
 
     /**
@@ -52,9 +43,10 @@ class Node extends ActiveRecord
 
         return [
             [['site_id','cm_id','name','is_real','workflow'],'required'],
-            [['site_id', 'cm_id', 'is_real', 'parent', 'workflow', 'status'], 'integer'],
+            [['site_id', 'cm_id', 'is_real', 'parent', 'workflow', 'status','sort'], 'integer'],
             [['v_nodes'], 'string'],
-            [['status'] ,'default','value'=> 0],
+            [['status','cm_id','workflow','is_real'] ,'default','value'=> 1],
+            [['sort', 'parent'] ,'default','value'=> 0],
             [['name'], 'string', 'max' => 20],
             [['slug', 'tpl_index', 'tpl_detail'], 'string', 'max' => 45],
             [['seo_title'], 'string', 'max' => 80],
@@ -87,38 +79,5 @@ class Node extends ActiveRecord
             'seo_description' => Yii::t('app', 'Seo Description'),
         ];
     }
-    public static function getSiteNodes($site_id)
-    {
-        self::$site_nodes = self::$site_children = [];
-        $result = self::find()->select(['id','parent','name'])->with()->where(['site_id'=>$site_id])
-        ->asArray()->all();
-        foreach($result as $row)
-        {
 
-            self::$site_nodes[$row['id']] = $row['name'];
-            self::$site_children[$row['id']][] = $row['parent'];
-        }
-
-        self::getOptionList($site_id,0,-1);
-
-        return self::$list_nodes;
-    }
-    /**
-     * @todo
-     * @param $site_id
-     * @param $root
-     * @param $level
-     * @return void
-     */
-    public static function getOptionList($site_id,$root=0, $level=-1)
-    {
-         //$dependency = new FileDependency(['fileName' => '@runtime/node.txt']);
-
-        if($root !=0){
-            self::$list_nodes[] =[ 'data' =>$root, 'value'=>str_repeat(' ', $level).$root.'|'.self::$site_nodes[$root]];
-        }
-        foreach (self::$site_children[$root] as $child)
-            self::getOptionList($site_id,$child, $level+1);
-
-    }
 }

@@ -11,8 +11,16 @@ use backend\assets\AutoCompleteAsset;
 /* @var $model backend\models\Node */
 /* @var $form yii\widgets\ActiveForm */
 AutoCompleteAsset::register($this);
-$model->is_real = 1;
-$model->parent = 0;
+
+$root = Node::find()->where(['site_id' => $site_id])->one();
+$leaves = $root->leaves()->all();
+$data   = [];
+$data[] = ['data'=>$root->id,'value'=>str_repeat(' ',$root->depth).$root->id.'|'.$root->name];
+
+foreach($leaves as $leaf){
+    $data[] = ['data'=>$leaf->id,'value'=>str_repeat(' ',$leaf->depth).$leaf->id.'|'.$leaf->name];
+}
+$data = json_encode($data,JSON_UNESCAPED_UNICODE);
 ?>
 
 <div class="node-form">
@@ -67,8 +75,8 @@ $model->parent = 0;
 
 </div>
 <?php
-$data = json_encode(Node::getSiteNodes($site_id),JSON_UNESCAPED_UNICODE);
-//$data = '[]';
+//$data = json_encode(Node::getSiteNodes($site_id),JSON_UNESCAPED_UNICODE);
+
 $js =<<<JS
 
 var nodeinfo = {$data};
