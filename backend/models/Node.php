@@ -26,6 +26,7 @@ use Yii;
  */
 class Node extends \common\models\Node
 {
+    public $parent;
     public $parent_txt;
 
     /**

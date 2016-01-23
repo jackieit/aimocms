@@ -88,8 +88,17 @@ $('#node-is_real input').click(
 
      if($(this).val()=='1'){
          $('.field-node-v_nodes').hide();
+         $('.field-node-cm_id').show();
+         $('#node-cm_id option[value=""]').attr('selected',true);
+         $('#node-cm_id option[value=1]').attr('selected',false);
+
      }else{
          $('.field-node-v_nodes').show();
+         $('.field-node-cm_id').hide();
+         $('#node-cm_id option[value=""]').attr('selected',false);
+         $('#node-cm_id option[value=1]').attr('selected',true);
+         //$('#node-cm_id').val('1');
+
      }
  });
     $('#node-parent_txt').autocomplete({

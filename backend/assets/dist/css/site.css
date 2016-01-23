@@ -32,3 +32,7 @@ a.desc:after {content: /*"\e114"*/ "\e152";  }
 /* end*/
 input.form-control.field-sort{width:60px;  margin-left: 5px;}
 .help-block{margin-bottom: 2px;}
+#myList{margin-top: 20px;}
+#myList li {  padding-left:40px;  list-style:none;  display: block;  margin-bottom: -1px;  background-color: #fff;  border: 1px solid #ddd;}
+#myList li, #sortableListsBase li {  padding-left: 40px; padding-top:5px;padding-bottom: 5px; margin: 5px; border: 1px solid #ddd;  background-color: #3f3f3f; color:#fff;}
+#myList li div {  padding: 7px;  background-color: #222; color:#f88;}

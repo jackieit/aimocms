@@ -261,19 +261,7 @@ use yii\widgets\Pjax;
                             <li>
                                 <a href="<?=Url::to(['site/create'])?>">新建站点</a>
                             </li>
-                            <li>
-                                <a href="#">潍柴动力</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
 
-                                </ul>
-                                <!-- /.nav-third-level -->
-                            </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>

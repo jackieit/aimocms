@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * NodeController implements the CRUD actions for Node model.
@@ -45,15 +46,29 @@ class NodeController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' =>false
+            'sort' =>false,
+            'pagination'=>[
+                'pageSize'=>0,
+            ]
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
              'site'  => $site,
+            'root'   => $root
           ]);
     }
+    public function actionSort($site_id='1')
+    {
+        $site = Site::findOne($site_id);
+        $root = Node::find()->where(['site_id'=>$site_id])->one();
 
+        return $this->render('sort', [
+            //'list'  => $query->all(),
+            'site'  => $site,
+            'root'  => $root
+        ]);
+    }
     /**
      * Displays a single Node model.
      * @param integer $id
@@ -152,7 +167,46 @@ class NodeController extends Controller
             ]);
         }
     }
+    public function actionMove($start_id,$prev_id,$next_id,$method)
+    {
 
+
+        if(Yii::$app->request->isAjax && isset($start_id) && isset($end_id)&&isset($prev_id)){
+            $start = Node::findOne($start_id);
+            $prev  = Node::findOne($prev_id);
+            $next  = Node::findOne($next_id);
+
+            //end 结点既为移动到当前结点的上一个结点
+            $func  = "insertAfter";
+            $target = $prev;
+            $master = $start;
+            if($method == '1'){
+                //排序
+
+
+            }else{
+
+            }
+            try{
+                if($master->{$func}($target))
+                {
+                    $msg = Yii::t('app','Move node success');
+                }else
+                {
+                    $msg = Yii::t('app','Move node failed');
+                }
+            }catch(\Exception $e)
+            {
+
+                $msg = Yii::t('app',$e->getMessage());
+            }
+        }else{
+            $msg = Yii::t('app','Not set the start and end node');
+        }
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_RAW;
+        return $msg;
+    }
     /**
      * Deletes an existing Node model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
