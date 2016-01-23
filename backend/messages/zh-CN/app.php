@@ -16,6 +16,8 @@ return [
     'View'       => '查看',
     'Yes'        => '是',
     'No'         => '否',
+    'Normal'     => '正常',
+    'Deleted'    => '已经删除',
     //user model
     'Username' =>'用户名',
     'Auth Key' => '认证密钥',
@@ -144,9 +146,9 @@ return [
     //Node
     'Node Site ID'    => '站点ID',
     'Node Cm ID'      => '内容模型',
-    'Node Name'       => '结点名称',
+    'Node Name'       => '栏目名称',
     'Node Is Real'    => '是否为实结点',
-    'Node V Nodes'    => '虚结点ID',
+    'Node V Nodes'    => '关联结点ID',
     'Node Parent'     => '父结点',
     'Node Slug'       => '固定链接(slug)',
     'Node Workflow'   => '投稿工作流',
@@ -157,5 +159,8 @@ return [
     'Create Node'     => '创建站点栏目',
     'Please select workflow' => '请选择工作流',
     'Please select content model' => '请选择内容模型',
-    'Please input Node id or Node name to select' => '请输入Node ID或者结点名称然后从下拉列表中选择,顶级结点可不选择',
+    'Please input Node id or Node name to select' => '请输入Node ID或者结点名称然后从下拉列表中选择',
+    'V Nodes can link other real nodes' => '如果选择虚结点,则可以关联实结点',
+    'Please fill the template name relative the site template,no need file extension' => '请填写相对于站点模板目录名称的模板名称,无需文件扩展名 ,如:index',
+    'When selected ,can not modify' => ' 一蛋选择,无法更改',
 ];

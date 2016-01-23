@@ -13,12 +13,12 @@ use backend\assets\AutoCompleteAsset;
 AutoCompleteAsset::register($this);
 
 $root = Node::find()->where(['site_id' => $site_id])->one();
-$leaves = $root->leaves()->all();
+$leaves = $root->children()->all();
 $data   = [];
-$data[] = ['data'=>$root->id,'value'=>str_repeat(' ',$root->depth).$root->id.'|'.$root->name];
+$data[] = ['data'=>$root->id,'value'=>'┣'.$root->id.'|'.$root->name];
 
 foreach($leaves as $leaf){
-    $data[] = ['data'=>$leaf->id,'value'=>str_repeat(' ',$leaf->depth).$leaf->id.'|'.$leaf->name];
+    $data[] = ['data'=>$leaf->id,'value'=>'┣'.str_repeat('━',$leaf->depth).$leaf->id.'|'.$leaf->name];
 }
 $data = json_encode($data,JSON_UNESCAPED_UNICODE);
 ?>
@@ -41,23 +41,24 @@ $data = json_encode($data,JSON_UNESCAPED_UNICODE);
 
     <?= $form->field($model, 'site_id')->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'cm_id')->dropDownList(ArrayHelper::map(Cm::find()->all(),'id','name'),['prompt'=>Yii::t('app','Please select content model')]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'is_real')->inline(true)->radioList(Node::isReal()) ?>
+    <?= $form->field($model, 'is_real')->inline(true)->radioList(Node::isReal())->hint(Yii::t('app','V Nodes can link other real nodes'),['class'=>'help-block col-lg-offset-2 col-lg-10']) ?>
 
-    <?= $form->field($model, 'v_nodes')->textarea(['rows' => 3]) ?>
+    <?= $form->field($model, 'v_nodes')->textarea(['rows' => 2]) ?>
     <?= Html::activeHiddenInput($model,'parent')?>
-     <?= $form->field($model, 'parent_txt')->textInput(['placeHolder'=>Yii::t('app','Please input Node id or Node name to select')]) ?>
+    <?= $form->field($model, 'cm_id')->dropDownList(ArrayHelper::map(Cm::find()->all(),'id','name'),['prompt'=>Yii::t('app','Please select content model')])->hint(Yii::t('app','When selected ,can not modify')) ?>
+
+    <?= $form->field($model, 'parent_txt')->textInput(['placeHolder'=>Yii::t('app','Please input Node id or Node name to select').Yii::t('app','When selected ,can not modify')]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'workflow')->dropDownList(ArrayHelper::map(Workflow::find()->all(),'id','name'),['prompt'=>Yii::t('app','Please select workflow')]) ?>
 
-    <?= $form->field($model, 'tpl_index')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tpl_index')->textInput(['maxlength' => true])->hint(Yii::t('app','Please fill the template name relative the site template,no need file extension')) ?>
 
-    <?= $form->field($model, 'tpl_detail')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tpl_detail')->textInput(['maxlength' => true])->hint(Yii::t('app','Please fill the template name relative the site template,no need file extension')) ?>
 
     <?php //$form->field($model, 'status')->textInput() ?>
 
@@ -94,6 +95,7 @@ $('#node-is_real input').click(
     $('#node-parent_txt').autocomplete({
         delimiter:'|',
         lookup: nodeinfo,
+        minChars:0,
         onSearchStart:function(query){
             $('#node-parent').val('');
         },

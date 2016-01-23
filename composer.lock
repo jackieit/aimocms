@@ -302,12 +302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "e14d3da8f84eefa3792fd22b5b5ecba9c98d2e18"
+                "reference": "d7b6f46cd423174c8a86c7f816dea45008dbf454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/d7b6f46cd423174c8a86c7f816dea45008dbf454",
-                "reference": "e14d3da8f84eefa3792fd22b5b5ecba9c98d2e18",
+                "url": "http://packagist.phpcomposer.com/files/cebe/markdown/d7b6f46cd423174c8a86c7f816dea45008dbf454.zip",
+                "reference": "d7b6f46cd423174c8a86c7f816dea45008dbf454",
                 "shasum": ""
             },
             "require": {
@@ -354,7 +354,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-20 11:07:08"
+            "time": "2016-01-21 11:46:58"
         },
         {
             "name": "creocoder/yii2-nested-sets",
@@ -366,7 +366,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/creocoder/yii2-nested-sets/zipball/cb8635a459b6246e5a144f096b992dcc30cf9954",
+                "url": "http://packagist.phpcomposer.com/files/creocoder/yii2-nested-sets/cb8635a459b6246e5a144f096b992dcc30cf9954.zip",
                 "reference": "cb8635a459b6246e5a144f096b992dcc30cf9954",
                 "shasum": ""
             },
@@ -499,12 +499,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "bee045b1391fb6080c891ca39522c03b92f50a88"
+                "reference": "f40e9a93f3666f58616d70b62cb65c0963fc77ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f40e9a93f3666f58616d70b62cb65c0963fc77ad",
-                "reference": "bee045b1391fb6080c891ca39522c03b92f50a88",
+                "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-framework/f40e9a93f3666f58616d70b62cb65c0963fc77ad.zip",
+                "reference": "f40e9a93f3666f58616d70b62cb65c0963fc77ad",
                 "shasum": ""
             },
             "require": {
@@ -585,7 +585,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-01-14 11:21:32"
+            "time": "2016-01-21 17:22:51"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -992,12 +992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "05dd7a27c575fb3dc3482b5bd24c8bd6c151ae45"
+                "reference": "d1a58d8c64f9075960665dc5347f5906ecb063cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/d1a58d8c64f9075960665dc5347f5906ecb063cf",
-                "reference": "05dd7a27c575fb3dc3482b5bd24c8bd6c151ae45",
+                "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-gii/d1a58d8c64f9075960665dc5347f5906ecb063cf.zip",
+                "reference": "d1a58d8c64f9075960665dc5347f5906ecb063cf",
                 "shasum": ""
             },
             "require": {
@@ -1037,7 +1037,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-01-05 08:55:15"
+            "time": "2016-01-15 17:12:14"
         }
     ],
     "aliases": [],

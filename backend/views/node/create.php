@@ -7,6 +7,8 @@ use yii\helpers\Html;
 /* @var $model backend\models\Node */
 
 $this->title = Yii::t('app', 'Create Node');
+$this->params['breadcrumbs'][] = ['label' => $site->name, 'url' => ['index','site_id'=>$site->id]];
+
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Nodes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

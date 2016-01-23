@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\models\Site;
 use Yii;
 
 /**
@@ -34,7 +35,13 @@ class Node extends \common\models\Node
     {
         return ['1' => Yii::t('app','Yes'),'2'=>Yii::t('app','No')];
     }
-
+    public static function nodeStatus()
+    {
+        return [
+            '1'  => Yii::t('app','Normal'),
+            '-1' => Yii::t('app','Deleted'),
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -43,10 +50,11 @@ class Node extends \common\models\Node
 
         return [
             [['site_id','cm_id','name','is_real','workflow'],'required'],
+            [['parent','parent_txt'],'required','on'=>'create'],
             [['site_id', 'cm_id', 'is_real', 'parent', 'workflow', 'status','sort'], 'integer'],
             [['v_nodes'], 'string'],
             [['status','cm_id','workflow','is_real'] ,'default','value'=> 1],
-            [['sort', 'parent'] ,'default','value'=> 0],
+            [[ 'parent'] ,'default','value'=> 0],
             [['name'], 'string', 'max' => 20],
             [['slug', 'tpl_index', 'tpl_detail'], 'string', 'max' => 45],
             [['seo_title'], 'string', 'max' => 80],
@@ -80,4 +88,43 @@ class Node extends \common\models\Node
         ];
     }
 
+    /**
+     * @return array
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $default   = $scenarios['default'];
+        unset($default['cm_id'],$default['parent'],$default['parent_txt']);
+        $scenarios['update'] = $default;
+        return $scenarios;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSite()
+    {
+        return $this->hasOne(Site::className(),['id'=>'site_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCm()
+    {
+        return $this->hasOne(Cm::className(),['id'=>'cm_id']);
+    }
+    public function getFather()
+    {
+        return $this->hasOne(self::className(),['id'=>'parent']);
+    }
+    public function getWorkflow()
+    {
+        return $this->hasOne(Workflow::className(),['id'=>'workflow']);
+    }
+/*    public function getParentNode()
+    {
+        return $this->hasOne(self::className(),['parent'=>'id']);
+    }*/
 }

@@ -5,10 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Node */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Node',
-]) . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Nodes'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Update') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => $site->name, 'url' => ['index','site_id'=>$site->id]];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
@@ -22,3 +20,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     ]) ?>
 
 </div>
+<?php
+$js = <<<JS
+    $('#node-cm_id,#node-parent_txt').attr('disabled',true);
+JS;
+$this->registerJs($js);
+?>

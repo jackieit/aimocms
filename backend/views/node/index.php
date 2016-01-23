@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use backend\models\Node;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -14,18 +14,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Node'), ['create','site_id'=>$site->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Node'), ['create','site_id'=>$site->id], ['class' => 'btn btn-success','data-pjax'=>0]) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             //'site_id',
-            'cm_id',
-            'name',
-            'is_real',
+            [
+                'attribute' => 'name',
+                'value' => function($model)
+                {
+                    return str_repeat('━',$model->depth).$model->name;
+                }
+            ],
+            [
+                'attribute'=>'is_real',
+                'value' => function($model){
+                    return Node::isReal()[$model->is_real];
+                }
+            ],
+            [
+                'attribute'=>'status',
+                'value' => function($model){
+                   return  Node::nodeStatus()[$model->status];
+                },
+            ],
+            'cm.name',
+
             // 'v_nodes:ntext',
             // 'parent',
             // 'slug',

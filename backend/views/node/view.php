@@ -2,13 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use backend\models\Node;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Node */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Nodes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $site->name, 'url' => ['index','site_id'=>$site->id]];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="node-view">
 
@@ -29,17 +31,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'site_id',
-            'cm_id',
+            'site.name',
+            'cm.name',
             'name',
-            'is_real',
+            [
+                'attribute'=>'is_real',
+                'value' => Node::isReal()[$model->is_real]
+            ],
             'v_nodes:ntext',
-            'parent',
+            [
+                'attribute'=>'parent',
+                'value' => isset($model->father)?$model->father->name:''
+            ],
             'slug',
-            'workflow',
+            'workflow.name',
             'tpl_index',
             'tpl_detail',
-            'status',
+            [
+                'attribute'=>'status',
+                'value' => Node::nodeStatus()[$model->status],
+            ],
             'seo_title',
             'seo_keyword',
             'seo_description',

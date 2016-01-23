@@ -168,7 +168,7 @@ class m160113_022635_init_cms extends Migration
             'cm_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '内容模型ID'",
             'name'     => $this->string(20)->notNull()->defaultValue('')." COMMENT '结点名称'",
             'is_real'  => $this->boolean()->notNull()->defaultValue(0)."  COMMENT '实虚结点'",
-            'sort'     => $this->smallInteger()->notNull()->defaultValue(0)."  COMMENT '排序'",
+            //'sort'     => $this->smallInteger()->notNull()->defaultValue(0)."  COMMENT '排序'",
             'lft'      => $this->integer()->notNull()->defaultValue(0)."  COMMENT '左值'",
             'rgt'      => $this->integer()->notNull()->defaultValue(0)."  COMMENT '右值'",
             'parent'   => $this->integer()->notNull()->defaultValue(0)." COMMENT '上级结点'",
