@@ -32,7 +32,14 @@ a.desc:after {content: /*"\e114"*/ "\e152";  }
 /* end*/
 input.form-control.field-sort{width:60px;  margin-left: 5px;}
 .help-block{margin-bottom: 2px;}
+/*node sort list begin*/
 #myList{margin-top: 20px;}
-#myList li {  padding-left:40px;  list-style:none;  display: block;  margin-bottom: -1px;  background-color: #fff;  border: 1px solid #ddd;}
-#myList li, #sortableListsBase li {  padding-left: 40px; padding-top:5px;padding-bottom: 5px; margin: 5px; border: 1px solid #ddd;  background-color: #3f3f3f; color:#fff;}
-#myList li div {  padding: 7px;  background-color: #222; color:#f88;}
+#myList li {padding-left:40px;list-style:none;display: block;margin-bottom: -1px;background-color: #fff;border: 1px solid #ddd;}
+#myList li, #sortableListsBase li {  padding-left: 40px; padding-top:5px;padding-bottom: 5px; margin: 5px;border: 1px solid #7a92a3; background-color: #a7b3bc; color:#fff;list-style: none;}
+#myList li div {  padding: 7px;  background-color: #7a92a3; color:#fff;}
+#myList .placeholder{background-color: #f0ad4e;}
+#sortableListsBase .currEl{background-color: #3980b5;color: #fff;padding: 5px;}
+#myList .hint{background-color: #2577b5;}
+#myList .hintWrapper{background-color: #7cb47c;}
+#sortableListsBase .lists{background: #bbffbb;border-bottom: 1px solid white;}
+/*node sort list end*/

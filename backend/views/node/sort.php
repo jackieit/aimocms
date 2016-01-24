@@ -95,12 +95,13 @@ $js = <<<JS
     );
 */
 var options ={
-    currElCss: {'background-color':'#222', 'color':'#fff'},
-	placeholderCss: {'background-color':'#ff8'},
-	hintCss: {'background-color':'#bbf'},
+    currElClass:'currEl',
+	placeholderClass:'placeholder',
+	hintClass:'hint',
 	listSelector: 'ol',
-	hintWrapperCss: {'background-color':'green', 'border':'1px dashed white'},
-	listsCss: {'background-color':'#bbffbb', 'border':'1px solid white','color':'#337ab7'},
+	hintWrapperClass:'hintWrapper',
+	//listsCss: {'background-color':'#bbffbb', 'border':'1px solid white','color':'#337ab7'},
+	listsClass:'lists',
 	//insertZone: 40,
 	scroll: 20,
     onChange: function( cEl )
@@ -117,6 +118,7 @@ var options ={
 		active: true,
 		close: '{$root}/imgs/Remove2.png',
 		open: '{$root}/imgs/Add2.png',
+
 		openerCss: {
 			'display': 'inline-block', // Default value
 			'float': 'left', // Default value
@@ -127,7 +129,6 @@ var options ={
 			'background-position': 'center center', // Default value
 			'background-repeat': 'no-repeat' // Default value
 		}
-
 	}
 }
 $('#myList').sortableLists(options);
