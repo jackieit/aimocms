@@ -58,46 +58,6 @@ $root_id = (int)$root->id;
 $ajax_url = Url::to(['move']);
 $asset_root = Yii::getAlias('@web');
 $js = <<<JS
-/*
-    var root = {$root_id};
-    var row_start_id = 0;
-    var row_end_id   = 0;
-    $("#w0 .table").tableDnD({
-            onDragClass: "danger",
-            onDropStyle: "success",
-            onDrop: function(table, row) {
-                var row_start_id = row.id;
-                if(row_start_id == 'row_{$root_id}')
-                return false;
-                var row_prev_id = $('#'+row.id).prev().attr('id');
-                var row_next_id = $('#'+row.id).next().attr('id');
-                console.log(row_start_id + '->' +row_prev_id);
-                if(row_start_id == row_prev_id)
-                    return false;
-                var start_id = row_start_id.substr(4);
-                var prev_id   = row_prev_id.substr(4);
-                var next_id  = row_next_id.substr(4);
-                console.log(start_id + '->' + prev_id);
-                var method = $('input[name=move-method]:checked').val()
-                 $.ajax({
-                    url:'{$ajax_url}',
-                    data:'start_id='+start_id+'&prev_id='+prev_id+'&next_id='+next_id+'&method='+method,
-                    dataType: "text",
-                    method:'get',
-                    success:function(data){
-                            alert(data);
-                    }
-                });
-
-            },
-            onDragStart: function(table, row) {
-                row_start_id = row.id;
-                if(row_start_id == 'row_{$root_id}')
-                return false;
- 		    }
-	    }
-    );
-*/
 var options ={
     currElClass:'currEl',
 	placeholderClass:'placeholder',
@@ -132,10 +92,16 @@ var options ={
          //移动到某个直接结点下做为下级.
          if(typeof (parent)!=='undefined' && parent !='row-{$root_id}'){
               //如果能找到同级上面的结点
+              var next = cEl.next().attr('id');
+
              if(typeof(prev)!='undefined'){
                   method  = 'insertAfter';
                    targetNode = prev;
-             }else{
+             }else if(typeof(next)!='undefined'){
+                   method  = 'insertBefore';
+                   targetNode = next;
+             }
+             else{
                   method  = 'appendTo';
                   targetNode = parent;
 
