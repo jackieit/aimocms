@@ -29,6 +29,8 @@ function displayChild($node){
 
     return $html;
 }
+//http://www.sitepoint.com/forums/showthread.php?651162-Build-nested-UL-and-LI-from-linear-array
+
 ?>
 <div class="node-index">
 
@@ -44,7 +46,52 @@ function displayChild($node){
     <div class="row">
         <ul id="myList" class="col-lg-8">
             <?php
-             echo  displayChild($root);
+            // echo  displayChild($root);
+/*            $stack = new SplStack();
+            $stack->push($list[0]->depth);
+          //  echo '<ul id="myList" class="col-lg-8">';
+
+
+            foreach($list as $k=> $item)
+            {
+                if ($item->depth > $stack->top()) {
+                    $stack->push($item->depth);
+                    echo "<li class=\"sortableListsOpen\">".$item->name."<ul>";
+                }
+                while (!$stack->isEmpty() && $stack->top() > $item->depth) {
+                    $stack->pop();
+                     echo "<li class=\"sortableListsOpen\">".$item->name."</li>";
+                    echo "</ul></li>";
+                }
+            }*/
+           // echo '</ul>';
+            $depth = 0;
+            echo '<ul>';
+            foreach($list as $index => $item){
+                if ($item->depth > $depth) {
+                    while ($item->depth > $depth) {
+                        echo '<ul>';
+                        echo '<li>';
+                        $depth++;
+                    }
+                } else if ($item->depth < $depth) {
+                    while ($item->depth < $depth) {
+                        echo '</li>';
+                        echo '</ul>';
+                        $depth--;
+                    }
+                } else if ($item->depth === $depth && $index !== 0) {
+                    echo '</li>';
+                    echo '<li>';
+                }
+                echo $item->name;
+
+                $depth = $item['depth'];
+            }
+            while ($depth-- >= 0) {
+                echo '</li>';
+                echo '</ul>';
+            }
             ?>
         </ul>
     </div>

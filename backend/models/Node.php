@@ -52,7 +52,7 @@ class Node extends \common\models\Node
         return [
             [['site_id','cm_id','name','is_real','workflow'],'required'],
             [['parent','parent_txt'],'required','on'=>'create'],
-            [['site_id', 'cm_id', 'is_real', 'parent', 'workflow', 'status','sort'], 'integer'],
+            [['site_id', 'cm_id', 'is_real', 'parent', 'workflow', 'status'], 'integer'],
             [['v_nodes'], 'string'],
             [['status','cm_id','workflow','is_real'] ,'default','value'=> 1],
             [[ 'parent'] ,'default','value'=> 0],
@@ -116,10 +116,10 @@ class Node extends \common\models\Node
     {
         return $this->hasOne(Cm::className(),['id'=>'cm_id']);
     }
-    public function getFather()
+/*    public function getFather()
     {
         return $this->hasOne(self::className(),['id'=>'parent']);
-    }
+    }*/
     public function getWorkflow()
     {
         return $this->hasOne(Workflow::className(),['id'=>'workflow']);

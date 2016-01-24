@@ -39,9 +39,14 @@ class NodeController extends Controller
     {
         $site = Site::findOne($site_id);
         $root = Node::find()->where(['site_id'=>$site_id])->one();
+        $lft = $rgt = 0;
+        if(isset($root)){
+            $lft = $root->lft;
+            $rgt = $root->rgt;
+        }
         $query = Node::find()->where(['site_id'=>$site_id]);
-        $query->andFilterWhere( ['>=','lft',$root->lft])
-              ->andFilterWhere(['<=','rgt',$root->rgt])
+        $query->andFilterWhere( ['>=','lft',$lft])
+              ->andFilterWhere(['<=','rgt',$rgt])
               ->orderBy(['lft'=>SORT_ASC]);
 
         $dataProvider = new ActiveDataProvider([
@@ -62,9 +67,17 @@ class NodeController extends Controller
     {
         $site = Site::findOne($site_id);
         $root = Node::find()->where(['site_id'=>$site_id])->one();
-
+        $lft = $rgt = 0;
+        if(isset($root)){
+            $lft = $root->lft;
+            $rgt = $root->rgt;
+        }
+        $query = Node::find()->where(['site_id'=>$site_id]);
+        $query->andFilterWhere( ['>=','lft',$lft])
+            ->andFilterWhere(['<=','rgt',$rgt])
+            ->orderBy(['lft'=>SORT_ASC]);
         return $this->render('sort', [
-            //'list'  => $query->all(),
+            'list'  => $query->all(),
             'site'  => $site,
             'root'  => $root
         ]);
@@ -100,7 +113,7 @@ class NodeController extends Controller
         $siteRoot = null;
         $model->is_real = 1;
         $model->scenario ='create';
-        if($hasRoot == 0 && empty($model->parent)){
+        if($hasRoot == 0){
             $siteRoot = new Node([
                 'site_id' => $site->id,
                 'name'    => $site->name,
