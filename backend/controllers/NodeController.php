@@ -180,30 +180,19 @@ class NodeController extends Controller
             ]);
         }
     }
-    public function actionMove($start_id,$prev_id,$next_id,$method)
+    public function actionMove($target,$curNode,$method)
     {
 
 
-        if(Yii::$app->request->isAjax && isset($start_id) && isset($end_id)&&isset($prev_id)){
-            $start = Node::findOne($start_id);
-            $prev  = Node::findOne($prev_id);
-            $next  = Node::findOne($next_id);
+        if(Yii::$app->request->isAjax && isset($target) && isset($curNode)&&isset($method)){
+            $to    = Node::findOne($target);
+            $cur   = Node::findOne($curNode);
+           // $func  = Node::findOne($method);
 
-            //end 结点既为移动到当前结点的上一个结点
-            $func  = "insertAfter";
-            $target = $prev;
-            $master = $start;
-            if($method == '1'){
-                //排序
-
-
-            }else{
-
-            }
             try{
-                if($master->{$func}($target))
+                if($cur->{$method}($to))
                 {
-                    $msg = Yii::t('app','Move node success');
+                    $msg = '1';
                 }else
                 {
                     $msg = Yii::t('app','Move node failed');

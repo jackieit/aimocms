@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use backend\models\Node;
-//use backend\assets\TableDndAsset;
+
 use backend\assets\SortableListAsset;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -13,22 +11,7 @@ SortableListAsset::register($this);
 $this->title = Yii::t('app', 'Nodes');
 $this->params['breadcrumbs'][] = ['label' => $site->name, 'url' => ['index','site_id'=>$site->id]];
 $this->params['breadcrumbs'][] = $this->title;
-$children =  $root->children(1)->all();
-//d($children);
-function displayChild($node){
-    $html = '<li class="sortableListsOpen" id="row-'.$node->id.'"><div>'.$node->name.'</div>';
-    $children = $node->children(1)->all();
-    if(isset($children)){
-        $html .='<ul>';
-        foreach($children as $child){
-            $html .=displayChild($child);
-        }
-        $html .='</ul>';
-    }
-    $html .="</li>";
 
-    return $html;
-}
 //http://www.sitepoint.com/forums/showthread.php?651162-Build-nested-UL-and-LI-from-linear-array
 
 ?>
@@ -46,51 +29,25 @@ function displayChild($node){
     <div class="row">
         <ul id="myList" class="col-lg-8">
             <?php
-            // echo  displayChild($root);
-/*            $stack = new SplStack();
-            $stack->push($list[0]->depth);
-          //  echo '<ul id="myList" class="col-lg-8">';
-
-
+            $stack = new SplStack();
+            if(isset($list[0]));
+                $stack->push($list[0]->depth);
             foreach($list as $k=> $item)
             {
+
                 if ($item->depth > $stack->top()) {
                     $stack->push($item->depth);
-                    echo "<li class=\"sortableListsOpen\">".$item->name."<ul>";
+                    echo "<ol>\n";
                 }
                 while (!$stack->isEmpty() && $stack->top() > $item->depth) {
                     $stack->pop();
-                     echo "<li class=\"sortableListsOpen\">".$item->name."</li>";
-                    echo "</ul></li>";
+                    echo "</ol></li>\n";
                 }
-            }*/
-           // echo '</ul>';
-            $depth = 0;
-            echo '<ul>';
-            foreach($list as $index => $item){
-                if ($item->depth > $depth) {
-                    while ($item->depth > $depth) {
-                        echo '<ul>';
-                        echo '<li>';
-                        $depth++;
-                    }
-                } else if ($item->depth < $depth) {
-                    while ($item->depth < $depth) {
-                        echo '</li>';
-                        echo '</ul>';
-                        $depth--;
-                    }
-                } else if ($item->depth === $depth && $index !== 0) {
-                    echo '</li>';
-                    echo '<li>';
-                }
-                echo $item->name;
-
-                $depth = $item['depth'];
+                echo"<li class=\"sortableListsOpen\" id=\"row-".$item->id."\"><div>{$item->id}.".$item->name."</div>\n";
             }
-            while ($depth-- >= 0) {
-                echo '</li>';
-                echo '</ul>';
+            while ($stack->count() > 1) {
+                $stack->pop();
+                echo "</ol>\n</li>\n";
             }
             ?>
         </ul>
@@ -99,7 +56,7 @@ function displayChild($node){
 <?php
 $root_id = (int)$root->id;
 $ajax_url = Url::to(['move']);
-$root = Yii::getAlias('@web');
+$asset_root = Yii::getAlias('@web');
 $js = <<<JS
 /*
     var root = {$root_id};
@@ -149,22 +106,84 @@ var options ={
 	hintWrapperClass:'hintWrapper',
 	//listsCss: {'background-color':'#bbffbb', 'border':'1px solid white','color':'#337ab7'},
 	listsClass:'lists',
-	//insertZone: 40,
+	insertZone: 20,
 	scroll: 20,
+	onDragStart: function(e, el)
+	{
+         console.log( 'onDragStart' );
+
+	},
+/*	isAllowed: function(currEl, hint, target)
+	{
+         console.log( 'isAllowed' );
+	},*/
     onChange: function( cEl )
     {
-        console.log(cEl);
-        console.log( 'onChange' );
+         var cur  = cEl.attr('id');
+         var prev = cEl.prev().attr('id');
+         var method = curNode = targetNode = null;
+         if(typeof (prev)!=='undefined'){
+              targetNode = prev;
+              curNode    = cur;
+              method     = 'insertBefore';
+
+         }
+         var parent = cEl.parents('li').attr('id');
+         //移动到某个直接结点下做为下级.
+         if(typeof (parent)!=='undefined' && parent !='row-{$root_id}'){
+              //如果能找到同级上面的结点
+             if(typeof(prev)!='undefined'){
+                  method  = 'insertAfter';
+                   targetNode = prev;
+             }else{
+                  method  = 'appendTo';
+                  targetNode = parent;
+
+             }
+             curNode = cur;
+         }else if(typeof (parent)!=='undefined' && parent =='row-{$root_id}'){
+             var next = cEl.next().attr('id');
+             var prev = cEl.prev().attr('id');
+             if(typeof (next)=='undefined'){
+                var nextEl = cEl.closest('ol').next().children('li').get(0);
+                //向上移动到顶级结点下面且上面是直接顶级结点
+                if(typeof (nextEl)!='undefined'){
+                    next = nextEl.id;
+                    method  = 'insertBefore';
+
+                }else{
+                    //下面没有结点了,找上级结点
+                    next = cEl.prev().attr('id');
+                    method = 'insertBefore';
+                }
+             } else{
+                console.log('here');
+                method = 'insertBefore';
+             }
+             targetNode  = next;
+             curNode = cur;
+         }
+         console.log( 'target='+targetNode+' curNode ='+curNode+ ' method=' +method );
+         $.ajax({
+            url:'{$ajax_url}',
+            data:'target='+targetNode.substr(4)+'&curNode='+curNode.substr(4)+'&method='+method,
+            dataType: "text",
+            method:'get',
+            success:function(data){
+                 if(data!='1'){
+                  alert(data);
+                 }
+            }
+        });
     },
     complete: function( cEl )
     {
-        console.log(cEl);
-        console.log( 'complete' );
+         console.log( 'complete' );
     },
 	opener: {
 		active: true,
-		close: '{$root}/imgs/Remove2.png',
-		open: '{$root}/imgs/Add2.png',
+		close: '{$asset_root}/imgs/Remove2.png',
+		open: '{$asset_root}/imgs/Add2.png',
 
 		openerCss: {
 			'display': 'inline-block', // Default value
