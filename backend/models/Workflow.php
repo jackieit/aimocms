@@ -19,6 +19,13 @@ class Workflow extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public static function IS_INNER()
+    {
+        return ['1' => Yii::t('app','Yes'),'2'=>Yii::t('app','No')];
+    }
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return '{{%workflow}}';
@@ -30,8 +37,10 @@ class Workflow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'],'required'],
             [['intro'], 'string'],
             [['is_inner'], 'integer'],
+            [['is_inner'],'default','value'=>2],
             [['name'], 'string', 'max' => 45],
         ];
     }

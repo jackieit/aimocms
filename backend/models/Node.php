@@ -124,6 +124,10 @@ class Node extends \common\models\Node
     {
         return $this->hasOne(Workflow::className(),['id'=>'workflow']);
     }
+
+    /**
+     * @return int
+     */
     public function delete()
     {
         $condition = [

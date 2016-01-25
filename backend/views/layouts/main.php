@@ -292,6 +292,18 @@ use yii\widgets\Pjax;
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
+                        <a href="#"><i class="fa fa-list-ol fa-fw"></i> 投稿工作流<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?=Url::to(['workflow/index'])?>">工作流管理</a>
+                            </li>
+                            <li>
+                                <a href="<?=Url::to(['wf-state/index'])?>">状态管理</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-user fa-fw"></i>用户相关<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>

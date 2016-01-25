@@ -41,6 +41,7 @@ class m160113_022635_init_cms extends Migration
             'res_url'    => $this->string(120)->notNull()->defaultValue('')." COMMENT '资源发布URL'",
             'page_404'   => $this->string(45)->notNull()->defaultValue('')."  COMMENT '404页面模板'",
             'beian'      => $this->string(45)->notNull()->defaultValue('')."  COMMENT 'ICP备案号'",
+            'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态' -1 关闭 0 正常",
             'seo_title'       => $this->string(80)->notNull()->defaultValue('')."  COMMENT 'SEO标题'",
             'seo_keyword'     => $this->string(240)->notNull()->defaultValue('')." COMMENT 'SEO关键字'",
             'seo_description' => $this->string(120)->notNull()->defaultValue('')." COMMENT 'SEO描述'",
@@ -224,7 +225,7 @@ class m160113_022635_init_cms extends Migration
             'created_at' => $this->integer()->notNull()->defaultValue(0)." COMMENT '发布时间'",
             'updated_at' => $this->integer()->notNull()->defaultValue(0)." COMMENT '更新时间'",
             // 1 正常 <1 删除
-            'state'  => $this->boolean()->notNull()->defaultValue(0)." COMMENT '状态'",
+            'status'  => $this->boolean()->notNull()->defaultValue(0)." COMMENT '状态'",
             'key `content`(`cm_id`,`node_id`,`content_id`)',
             'key `sort` (`user_id` asc ,`top` asc,`pink` asc ,`sort` asc,`updated_at` desc)',
 
