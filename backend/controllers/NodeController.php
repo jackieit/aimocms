@@ -45,6 +45,7 @@ class NodeController extends Controller
             $rgt = $root->rgt;
         }
         $query = Node::find()->where(['site_id'=>$site_id]);
+        $query->andFilterWhere( ['>','status',0]);
         $query->andFilterWhere( ['>=','lft',$lft])
               ->andFilterWhere(['<=','rgt',$rgt])
               ->orderBy(['lft'=>SORT_ASC]);
@@ -63,6 +64,7 @@ class NodeController extends Controller
             'root'   => $root
           ]);
     }
+
     public function actionSort($site_id='1')
     {
         $site = Site::findOne($site_id);
@@ -73,6 +75,7 @@ class NodeController extends Controller
             $rgt = $root->rgt;
         }
         $query = Node::find()->where(['site_id'=>$site_id]);
+        $query->andFilterWhere( ['>','status',0]);
         $query->andFilterWhere( ['>=','lft',$lft])
             ->andFilterWhere(['<=','rgt',$rgt])
             ->orderBy(['lft'=>SORT_ASC]);

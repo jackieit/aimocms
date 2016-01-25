@@ -64,13 +64,12 @@ var options ={
 	hintClass:'hint',
 	listSelector: 'ol',
 	hintWrapperClass:'hintWrapper',
-	//listsCss: {'background-color':'#bbffbb', 'border':'1px solid white','color':'#337ab7'},
 	listsClass:'lists',
 	insertZone: 20,
 	scroll: 20,
 	onDragStart: function(e, el)
 	{
-         console.log( 'onDragStart' );
+         //console.log( 'onDragStart' );
 
 	},
 /*	isAllowed: function(currEl, hint, target)
@@ -80,56 +79,39 @@ var options ={
     onChange: function( cEl )
     {
          var cur  = cEl.attr('id');
-         var prev = cEl.prev().attr('id');
-         var method = curNode = targetNode = null;
-         if(typeof (prev)!=='undefined'){
-              targetNode = prev;
-              curNode    = cur;
-              method     = 'insertBefore';
 
+         var method = curNode = targetNode = null;
+
+
+         var prev = cEl.prev().attr('id');
+         if(typeof (prev)=='undefined'){
+            try{
+               prev = cEl.closest('ol').prev().children('li').get(0).id;
+            }catch(e){
+
+            }
+         }
+         var next = cEl.next().attr('id');
+          if(typeof (next)=='undefined'){
+            try{
+                next = cEl.closest('ol').next().children('li').get(0).id;
+            }catch(e){
+
+            }
          }
          var parent = cEl.parents('li').attr('id');
-         //移动到某个直接结点下做为下级.
-         if(typeof (parent)!=='undefined' && parent !='row-{$root_id}'){
-              //如果能找到同级上面的结点
-              var next = cEl.next().attr('id');
-
-             if(typeof(prev)!='undefined'){
-                  method  = 'insertAfter';
-                   targetNode = prev;
-             }else if(typeof(next)!='undefined'){
-                   method  = 'insertBefore';
-                   targetNode = next;
-             }
-             else{
-                  method  = 'appendTo';
-                  targetNode = parent;
-
-             }
-             curNode = cur;
-         }else if(typeof (parent)!=='undefined' && parent =='row-{$root_id}'){
-             var next = cEl.next().attr('id');
-             var prev = cEl.prev().attr('id');
-             if(typeof (next)=='undefined'){
-                var nextEl = cEl.closest('ol').next().children('li').get(0);
-                //向上移动到顶级结点下面且上面是直接顶级结点
-                if(typeof (nextEl)!='undefined'){
-                    next = nextEl.id;
-                    method  = 'insertBefore';
-
-                }else{
-                    //下面没有结点了,找上级结点
-                    next = cEl.prev().attr('id');
-                    method = 'insertBefore';
-                }
-             } else{
-                console.log('here');
-                method = 'insertBefore';
-             }
-             targetNode  = next;
-             curNode = cur;
+         if(typeof (prev) !='undefined'){
+            method = 'insertAfter';
+            targetNode = prev;
+         }else if(typeof (next) !='undefined'){
+            targetNode = next;
+            method = 'insertBefore';
+         }else if(typeof(parent)!='undefined'){
+            targetNode = parent;
+            method = 'appendTo';
          }
-         console.log( 'target='+targetNode+' curNode ='+curNode+ ' method=' +method );
+         curNode = cur;
+         //console.log( 'target='+targetNode+' curNode ='+curNode+ ' method=' +method );
          $.ajax({
             url:'{$ajax_url}',
             data:'target='+targetNode.substr(4)+'&curNode='+curNode.substr(4)+'&method='+method,
@@ -144,7 +126,7 @@ var options ={
     },
     complete: function( cEl )
     {
-         console.log( 'complete' );
+        // console.log( 'complete' );
     },
 	opener: {
 		active: true,

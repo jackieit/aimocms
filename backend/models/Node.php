@@ -124,6 +124,16 @@ class Node extends \common\models\Node
     {
         return $this->hasOne(Workflow::className(),['id'=>'workflow']);
     }
+    public function delete()
+    {
+        $condition = [
+            'and',
+            ['=','site_id',$this->site_id],
+            ['>=', 'lft', $this->lft],
+            ['<=', 'rgt', $this->rgt],
+        ];
+        return $this->updateAll(['status'=>-1],$condition);
+    }
 /*    public function getParentNode()
     {
         return $this->hasOne(self::className(),['parent'=>'id']);
