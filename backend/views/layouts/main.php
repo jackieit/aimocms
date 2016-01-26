@@ -8,11 +8,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
+use yii\widgets\Pjax;
+
 //use yii;
 AppAsset::register($this);
-use yii\widgets\Pjax;
 //$this->title = 'Dashboard';
 //$this->params['breadcrumbs'][] = $this->title;
+//$labels = \yii\helpers\ArrayHelper::getColumn($this->params['breadcrumbs'],'labels');
+d($this->params);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -250,7 +253,7 @@ use yii\widgets\Pjax;
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 仪表盘</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> 站点管理<span class="fa arrow"></span></a>
@@ -296,9 +299,6 @@ use yii\widgets\Pjax;
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="<?=Url::to(['workflow/index'])?>">工作流管理</a>
-                            </li>
-                            <li>
-                                <a href="<?=Url::to(['wf-state/index'])?>">状态管理</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

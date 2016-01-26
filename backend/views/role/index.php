@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Auth Role'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Auth Role'), ['create'], ['class' => 'btn btn-success','data-pjax'=>0]) ?>
         <?= Html::a(Yii::t('app', 'List Auth Category'), ['category-list'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([

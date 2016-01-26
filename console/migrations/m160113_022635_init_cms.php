@@ -274,12 +274,12 @@ class m160113_022635_init_cms extends Migration
         $this->createTable("{{%workflow_step}}",[
             'id'       => $this->primaryKey(),
             'wf_id'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '工作流名称'",
-            'role_id'  => $this->integer()->notNull()->defaultValue(0)." COMMENT '角色ID'",
-            'name'  => $this->string(45)->notNull()->defaultValue('')." COMMENT '工作流操作名称'",
+            'role_id'  => $this->text()->defaultValue(Null)." COMMENT '角色ID,豆号分隔'",
+            'name'     => $this->string(45)->notNull()->defaultValue('')." COMMENT '工作流操作名称'",
             'before_state'  => $this->string(80)->notNull()->defaultValue(0)." COMMENT '操作之前值'",
             'after_state'   => $this->string(80)->notNull()->defaultValue(0)." COMMENT '操作之后值'",
             'append_note'   => $this->boolean()->notNull()->defaultValue(0)." COMMENT '操作后是否附加说明'",
-            'intro' => $this->text()->defaultValue(null)." COMMENT '简介'",
+            'intro'         => $this->text()->defaultValue(null)." COMMENT '简介'",
             'CONSTRAINT {{%workflow_step}}
                 FOREIGN KEY (`wf_id`)
                 REFERENCES {{%workflow}} (`id`)

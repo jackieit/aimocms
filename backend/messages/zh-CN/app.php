@@ -32,6 +32,7 @@ return [
     'This email address has already been taken.' => 'Email 已经存在。',
     'Are you sure you want to delete this item?' => '你确定要删除此项目吗？',
     'Update {modelClass}: ' => '更新{modelClass}:',
+    'Create {modelClass}: ' => '新建{modelClass}:',
     'User Forms' => '用户管理',
     'User Form' => '',
     'Search' => '搜索',
@@ -188,4 +189,6 @@ return [
     'Before State'   => '之前状态',
     'After State'    => '之后状态',
     'Append Note'    => '附加说明',
+    'Select append note' => '选择是否附加说明',
+    'If more than one state split by slashes' => '如果有多个状态,用斜线\'/\',进行分隔',
 ];
