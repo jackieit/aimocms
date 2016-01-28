@@ -191,4 +191,7 @@ return [
     'Append Note'    => '附加说明',
     'Select append note' => '选择是否附加说明',
     'If more than one state split by slashes' => '如果有多个状态,用斜线\'/\',进行分隔',
+    //内容管理
+    'Create Content' => '新增内容',
+    'Contents' => '内容管理',
 ];

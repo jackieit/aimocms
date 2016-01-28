@@ -1,9 +1,5 @@
 <?php
-
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
 use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\assets\AppAsset;
@@ -12,10 +8,6 @@ use yii\widgets\Pjax;
 
 //use yii;
 AppAsset::register($this);
-//$this->title = 'Dashboard';
-//$this->params['breadcrumbs'][] = $this->title;
-//$labels = \yii\helpers\ArrayHelper::getColumn($this->params['breadcrumbs'],'labels');
-d($this->params);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -274,7 +266,9 @@ d($this->params);
                             <li>
                                 <a href="<?=Url::to(['node/index'])?>">栏目列表</a>
                             </li>
-
+                            <li>
+                                <a href="<?=Url::to(['content/index'])?>">内容管理</a>
+                            </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>

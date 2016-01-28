@@ -154,6 +154,7 @@ class Cm extends \yii\db\ActiveRecord
         $table = self::$TAB_PREFIX[$prefix].$tab;
         return '{{%'.$table.'}}';
     }
+
     /**
      * @inheritdoc
      */

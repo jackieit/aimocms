@@ -90,6 +90,12 @@ class WorkflowController extends Controller
             ]);
         }
     }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionStepDelete($id)
     {
         $model = null;
