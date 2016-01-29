@@ -35,6 +35,7 @@ $model->is_inner = 2;
         <?= $form->field($model, 'length')->hint(Yii::t('app','useful for string and decimal datatype')) ?>
         <?= $form->field($model, 'input')->dropDownList(CmField::inputType(),['prompt'=> Yii::t('app','Prompt inputtype')]) ?>
         <?= $form->field($model, 'source')->textarea()->hint(Yii::t('app','support key value pair per line or sql statement')) ?>
+        <?= $form->field($model, 'options')->textarea()->hint(Yii::t('app','equal Yii Active field options')) ?>
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Create') : Yii::t('app','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>

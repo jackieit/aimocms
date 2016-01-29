@@ -69,8 +69,8 @@ class Content extends \yii\db\ActiveRecord
         self::$_select_field = $cm->select_field;
         self::$_title_field  = $cm->title_field;
 
-        $fields = CmField::find()->orderBy(['sort' => SORT_ASC,'id'=>SORT_ASC])->asArray()->all();
-        self::$_fields = $fields;
+        $fields = CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_ASC])->asArray()->all();
+        self::$_fields  = self::getOptions($fields);
 
         return new static;
     }
@@ -80,7 +80,6 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return self::$_rules;
-        //return [];
     }
 
     /**
@@ -114,7 +113,7 @@ class Content extends \yii\db\ActiveRecord
     {
         $rules = [];
         if(!empty($rule)){
-            $string = "<?php\n return [\n{$rule}\n];\n?>";
+            $string = "<?php\nreturn [\n{$rule}\n];\n?>";
             $cacheDir = Yii::getAlias('@runtime/cm');
             if(!is_dir($cacheDir)){
                 mkdir($cacheDir);
@@ -125,5 +124,49 @@ class Content extends \yii\db\ActiveRecord
         }
 
         return $rules;
+    }
+
+    /**
+     * @param $fields
+     * @return mixed
+     */
+    public static  function getOptions($fields)
+    {
+        foreach($fields as $k => $field){
+           if(empty($field['options']))
+               $fields[$k]['options'] =[];
+           else
+               $fields[$k]['options'] = self::getRulesFromString(trim($field['options'],'[]'),'options');
+        }
+        return $fields;
+    }
+
+    /**
+     * @param $string
+     * @return array
+     */
+    public static function getSource($string)
+    {
+        $string = strtolower($string);
+        $options = [];
+        if(strpos($string,'select')!==false){
+            $query = Yii::$app->db->createCommand($string)->queryAll();
+            $fields = null;
+            foreach($query as $row)
+            {
+                if(!isset($fields))
+                    $fields = array_keys($row);
+                $options[$row[$fields[0]]] = $row[$fields[1]];
+            }
+        }else{
+            $string = trim($string);
+            $lines  = preg_split ('/$\R?^/m', $string);
+            foreach($lines as $line)
+            {
+                $array = explode('=>',$line);
+                $options[trim($array[0])] = trim($array[1]);
+            }
+        }
+        return $options;
     }
 }

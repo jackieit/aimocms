@@ -87,7 +87,7 @@ $data = json_encode($data,JSON_UNESCAPED_UNICODE);
                 <ul style="max-height: 300px;overflow: auto;">
                 <?php
                 $stack = new SplStack();
-                if(isset($leaves[0]));
+                if(isset($leaves[0]))
                 $stack->push($leaves[0]->depth);
                 foreach($leaves as $k=> $item)
                 {

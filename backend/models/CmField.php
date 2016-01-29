@@ -88,7 +88,7 @@ class CmField extends \yii\db\ActiveRecord
         return [
             [['name','label','data_type','input'],'required','on'=>['update','create']],
             [['cm_id', 'is_inner'], 'integer'],
-            [['source','length','old_name'], 'string'],
+            [['source','length','old_name','options'], 'string'],
             [['length'],'required','when'=>function(){
                 return $this->data_type=='string' || $this->data_type=='decimal';
             },'whenClient'=>"function(attribute,value){
@@ -115,6 +115,7 @@ class CmField extends \yii\db\ActiveRecord
             'length' => Yii::t('app', 'Field Data Length'),
             'input' => Yii::t('app', 'Field Input Form'),
             'source' => Yii::t('app', 'Field Source'),
+            'options' => Yii::t('app', 'Field options'),
             'is_inner' => Yii::t('app', 'Is Inner'),
         ];
     }

@@ -41,7 +41,7 @@ class m160113_022635_init_cms extends Migration
             'res_url'    => $this->string(120)->notNull()->defaultValue('')." COMMENT '资源发布URL'",
             'page_404'   => $this->string(45)->notNull()->defaultValue('')."  COMMENT '404页面模板'",
             'beian'      => $this->string(45)->notNull()->defaultValue('')."  COMMENT 'ICP备案号'",
-            'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态' -1 关闭 0 正常",
+            'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态 -1 关闭 0 正常'",
             'seo_title'       => $this->string(80)->notNull()->defaultValue('')."  COMMENT 'SEO标题'",
             'seo_keyword'     => $this->string(240)->notNull()->defaultValue('')." COMMENT 'SEO关键字'",
             'seo_description' => $this->string(120)->notNull()->defaultValue('')." COMMENT 'SEO描述'",
@@ -133,8 +133,9 @@ class m160113_022635_init_cms extends Migration
             'length'   => $this->string(20)->notNull()->defaultValue('')." COMMENT '字段长度'",
             'sort'     => $this->smallInteger()->notNull()->defaultValue(0)." COMMENT '排序'",
             'input'    => $this->string(45)->notNull()->defaultValue('')."  COMMENT '表单输入类型'",
-            'source'   => $this->text()."  COMMENT '数据来源'",
+            'source'   => $this->text()->defaultValue(null)."  COMMENT '数据来源'",
             'is_inner' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '是否内置'",
+            'options'  => $this->text()->defaultValue(null)."  COMMENT 'ActiveForm 表单Option'",
             'key cmid (`cm_id`)',
             'CONSTRAINT {{%cm_field}}
                 FOREIGN KEY (`cm_id`)

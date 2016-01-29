@@ -17,18 +17,23 @@ $js .=<<<JS_CODE
 tinymce.init({
     selector:'.richEditor' ,
     language:'{$langs}',
-    height: 500,
+   // height: 500,
     theme: 'modern',
     plugins: [
         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code fullscreen',
         'insertdatetime media nonbreaking save table contextmenu directionality',
         'emoticons template paste textcolor colorpicker textpattern imagetools'
-      ]
+      ],
+    images_upload_url: 'postAcceptor.php',
+    images_upload_base_path: '/uploads/',
+    images_upload_credentials: true,
+    paste_data_images: true
 });
 JS_CODE;
 
 }
+$dateInput = $dateTimeInput=[];
 
 ?>
 
@@ -42,28 +47,49 @@ JS_CODE;
                 case 'textInput':
                 case 'passwordInput':
                 case 'textarea':
-                    $input->{$field['input']}(['maxlength' => true])->label($field['label']);
+                    $options = array_merge(['maxlength' => true],$field['options']);
+                    $input->{$field['input']}($options)->label($field['label']);
                     break;
                 case 'hiddenInput':
-                    $input->{$field['input']}()->label(false);
+                    $input->{$field['input']}($field['options'])->label(false);
                     break;
                 case 'fileInput':
-                    $input->{$field['input']}()->label($field['label']);
-
+                    $input->{$field['input']}($field['options'])->label($field['label']);
                     break;
                 case 'radio':
                 case 'checkbox':
-                    $input->{$field['input']}()->label($field['label']);
+
+                $input->{$field['input']}($field['options'])->label($field['label']);
                     break;
                 case 'dropDownList':
+                    $extra_opt = ['prompt'=>Yii::t('app','Please select')];
                 case 'checkboxList':
                 case 'radioList':
+                    $data = $model->getSource($field['source']);
+                    if(isset($extra_opt))
+                        $field['options'] = array_merge($field['options'],$extra_opt);
+                    $input->{$field['input']}($data,$field['options'])->label($field['label']);
                     break;
                 case 'richEditor':
-                    $input->textarea(['class'=>'richEditor'])->label($field['label']);
+                    $options = array_merge(['class'=>'richEditor'],$field['options']);
+                    $input->textarea($options)->label($field['label']);
                     break;
                 case 'datePicker':
+
                 case 'datetimePicker':
+                    if($field['input']=='datePicker') {
+                        $fname = &$field['name'];
+                        array_push($dateInput, $fname);
+                    }else{
+                        $fname = &$field['name'];
+                        array_push($dateTimeInput,$fname);
+                    }
+
+                    $input = $form->field($model,$field['name'],[
+                        'template' => "{label}\n<div class='input-group' id='picker-{$fname}'>{input}<span class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span></div> \n{hint}\n{error}"
+                    ]);
+                    $options = array_merge(['class'=>'form-control'],$field['options']);
+                    $input->textInput($options)->label($field['label']);
                     break;
 
                 default:
@@ -84,5 +110,37 @@ JS_CODE;
 
 </div>
 <?php
+if(in_array('datePicker',$inputType) || in_array('datetimePicker',$inputType))
+{
+    \backend\assets\DatetimeAsset::register($this);
+    $langs = strtolower(Yii::$app->language);
+}
+$datePickId = '';
+foreach($dateInput as $el){
+    $datePickId='#picker-'.$el.',';
+}
+$datePickId = trim($datePickId,',');
+$dateTimePickId = '';
+foreach($dateTimeInput as $el){
+    $dateTimePickId='#picker-'.$el.',';
+}
+$dateTimePickId = trim($dateTimePickId,',');
+if(!empty($datePickId))
+$js.=<<<JS_CODE
+
+    $('{$datePickId}').datetimepicker({
+        locale: '{$langs}',
+        format:'YYYY-MM-DD'
+    });
+JS_CODE;
+if(!empty($dateTimePickId))
+   $js.=<<<JS_CODE
+
+    $('{$dateTimePickId}').datetimepicker({
+        locale: '{$langs}',
+        format:'YYYY-MM-DD HH:mm:ss'
+    });
+
+JS_CODE;
 $this->registerJs($js);
 ?>
