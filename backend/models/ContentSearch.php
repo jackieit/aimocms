@@ -19,7 +19,7 @@ class ContentSearch extends Content
     {
         return [
             [['id'], 'integer'],
-            [['title', 'color', 'author', 'from', 'photo', 'intro', 'content', 'seo_title', 'seo_keyword', 'seo_description', 'tpl_detail', 'file_name', 'slug'], 'safe'],
+            //[['title', 'color', 'author', 'from', 'photo', 'intro', 'content', 'seo_title', 'seo_keyword', 'seo_description', 'tpl_detail', 'file_name', 'slug'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class ContentSearch extends Content
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+/*        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'from', $this->from])
@@ -74,7 +74,7 @@ class ContentSearch extends Content
             ->andFilterWhere(['like', 'seo_description', $this->seo_description])
             ->andFilterWhere(['like', 'tpl_detail', $this->tpl_detail])
             ->andFilterWhere(['like', 'file_name', $this->file_name])
-            ->andFilterWhere(['like', 'slug', $this->slug]);
+            ->andFilterWhere(['like', 'slug', $this->slug]);*/
 
         return $dataProvider;
     }

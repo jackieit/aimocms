@@ -175,6 +175,6 @@ class Cm extends \yii\db\ActiveRecord
     }
     public function getSite()
     {
-        return $this->hasOne(Site::className(),['site_id' => 'id']);
+        return $this->hasOne(Site::className(),['id' => 'site_id']);
     }
 }

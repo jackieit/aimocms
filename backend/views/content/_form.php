@@ -40,7 +40,7 @@ $dateInput = $dateTimeInput=[];
 <div class="content-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?
+    <?php
         foreach($fields as $field):
             $input = $form->field($model,$field['name']);
             switch ($field['input']) {
