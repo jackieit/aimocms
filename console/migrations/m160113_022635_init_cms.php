@@ -231,6 +231,22 @@ class m160113_022635_init_cms extends Migration
             'key `sort` (`user_id` asc ,`top` asc,`pink` asc ,`sort` asc,`updated_at` desc)',
 
         ],$tableComment);
+
+        $tableComment = $tableOptions." COMMENT '上传资源表'";
+        $this->execute("DROP TABLE IF EXISTS {{%resource}};");
+        $this->createTable('{{%resource}}',[
+            'id'       => $this->primaryKey(),
+            'node_id'  => $this->integer()->notNull()->defaultValue(0)." COMMENT '结点分类ID'",
+            'index_id' => $this->integer()->notNull()->defaultValue(0)." COMMENT '关联内容ID'",
+            'path'     => $this->string(80)->notNull()->defaultValue('')." COMMENT '资源路径'",
+            'created_at' => $this->integer()->notNull()->defaultValue(0)." COMMENT '发布时间'",
+             // 0 初步上传 1 正常
+            'status'  => $this->boolean()->notNull()->defaultValue(0)." COMMENT '状态'",
+            'key `node_id`(`node_id`)',
+            'key `index_id`(`index_id`)'
+
+        ],$tableComment);
+
         $tableComment = $tableOptions." COMMENT '操作记录表'";
         $this->execute("DROP TABLE IF EXISTS {{%log}};");
         $this->createTable('{{%log}}',[
@@ -321,6 +337,7 @@ class m160113_022635_init_cms extends Migration
         $this->execute("DROP TABLE IF EXISTS {{%node}};");
         $this->execute("DROP TABLE IF EXISTS {{%cm_article}};");
         $this->execute("DROP TABLE IF EXISTS {{%cm_index}};");
+        $this->execute("DROP TABLE IF EXISTS {{%resource}};");
         $this->execute("DROP TABLE IF EXISTS {{%log}};");
         $this->execute("DROP TABLE IF EXISTS {{%workflow_state}};");
         $this->execute("DROP TABLE IF EXISTS {{%workflow_step}};");

@@ -9,16 +9,16 @@ namespace backend\assets;
 
 use yii\web\AssetBundle;
 
-class SortableListAsset extends AssetBundle
+class WebUploaderAsset extends AssetBundle
 {
 
     public $sourcePath = '@backend/assets/dist';
-   // public $baseUrl = '@web';
     public $css = [
-
+        'css/webuploader.css'
     ];
     public $js = [
-        'js/jquery.sortable-lists.min.js',
+        'js/webuploader/webuploader.min.js',
+        'js/webuploader/upload.js',
     ];
 
     public $depends = [

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Content */
 /* @var $form yii\widgets\ActiveForm */
@@ -31,9 +32,9 @@ tinymce.init({
     paste_data_images: true
 });
 JS_CODE;
-
 }
-$dateInput = $dateTimeInput=[];
+
+$dateInput = $dateTimeInput= $fileInput = [];
 
 ?>
 
@@ -54,7 +55,20 @@ $dateInput = $dateTimeInput=[];
                     $input->{$field['input']}($field['options'])->label(false);
                     break;
                 case 'fileInput':
-                    $input->{$field['input']}($field['options'])->label($field['label']);
+                    array_push($fileInput,$field['name']);
+                    $extra_opt = ['id'=>$field['name'].'_val'];
+                    $field['options'] = array_merge($field['options'],$extra_opt);
+                    $input = $form->field($model,$field['name'],[
+                                'template' => "
+                                    {label}\n
+                                    <div class='input-group'>
+                                        {input}
+                                        <div id=\"{$field['name']}-thelist\" class=\"uploader-list\"></div>
+                                        <div class=\"btns\">
+                                            <div class=\"webuploader-pick\">选择文件</div>
+                                        </div>
+                                    </div>"
+                            ])->hiddenInput($field['options'])->label($field['label']);
                     break;
                 case 'radio':
                 case 'checkbox':
@@ -114,27 +128,26 @@ if(in_array('datePicker',$inputType) || in_array('datetimePicker',$inputType))
 {
     \backend\assets\DatetimeAsset::register($this);
     $langs = strtolower(Yii::$app->language);
-}
-$datePickId = '';
-foreach($dateInput as $el){
-    $datePickId='#picker-'.$el.',';
-}
-$datePickId = trim($datePickId,',');
-$dateTimePickId = '';
-foreach($dateTimeInput as $el){
-    $dateTimePickId='#picker-'.$el.',';
-}
-$dateTimePickId = trim($dateTimePickId,',');
-if(!empty($datePickId))
-$js.=<<<JS_CODE
+    $datePickId = '';
+    foreach($dateInput as $el){
+        $datePickId='#picker-'.$el.',';
+    }
+    $datePickId = trim($datePickId,',');
+    $dateTimePickId = '';
+    foreach($dateTimeInput as $el){
+        $dateTimePickId='#picker-'.$el.',';
+    }
+    $dateTimePickId = trim($dateTimePickId,',');
+    if(!empty($datePickId))
+        $js.=<<<JS_CODE
 
     $('{$datePickId}').datetimepicker({
         locale: '{$langs}',
         format:'YYYY-MM-DD'
     });
 JS_CODE;
-if(!empty($dateTimePickId))
-   $js.=<<<JS_CODE
+    if(!empty($dateTimePickId))
+        $js.=<<<JS_CODE
 
     $('{$dateTimePickId}').datetimepicker({
         locale: '{$langs}',
@@ -142,5 +155,25 @@ if(!empty($dateTimePickId))
     });
 
 JS_CODE;
+}
+$upload_fields = json_encode($fileInput);
+$js .= <<<JS_CODE
+var upload_fields = {$upload_fields};
+for(var i=0;i<upload_fields.length;i++)
+{
+    uploader(upload_fields[i]);
+}
+JS_CODE;
 $this->registerJs($js);
+if(in_array('fileInput',$inputType)){
+    $asset = \backend\assets\WebUploaderAsset::register($this);
+    $swfPath = $asset->baseUrl;
+    $resUrl  = Url::to(['resource/upload']);
+    $js =<<<JS_CODE
+    var BASE_URL    = '{$swfPath}';
+    var SERVER_URL  = '{$resUrl}';
+    var NODE_ID     = '{$nodeinfo['id']}';
+JS_CODE;
+    $this->registerJs($js,\yii\web\View::POS_HEAD);
+}
 ?>

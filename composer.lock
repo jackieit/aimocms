@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "58bbfdd606013aa745ac4ed0bec54357",
-    "content-hash": "21e678a22f815f1f4999613fc92d41b7",
+    "hash": "98c5966204bab080308d650eed69560a",
+    "content-hash": "cf9235f71e4582773e237c017d5fa8dd",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -139,16 +139,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.2.5",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "d08264a678865849c808359d126e3bddb9ec87a6"
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/d08264a678865849c808359d126e3bddb9ec87a6",
-                "reference": "d08264a678865849c808359d126e3bddb9ec87a6",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38",
                 "shasum": ""
             },
             "require": {
@@ -306,7 +306,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/cebe/markdown/d7b6f46cd423174c8a86c7f816dea45008dbf454.zip",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/d7b6f46cd423174c8a86c7f816dea45008dbf454",
                 "reference": "d7b6f46cd423174c8a86c7f816dea45008dbf454",
                 "shasum": ""
             },
@@ -366,7 +366,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/creocoder/yii2-nested-sets/cb8635a459b6246e5a144f096b992dcc30cf9954.zip",
+                "url": "https://api.github.com/repos/creocoder/yii2-nested-sets/zipball/cb8635a459b6246e5a144f096b992dcc30cf9954",
                 "reference": "cb8635a459b6246e5a144f096b992dcc30cf9954",
                 "shasum": ""
             },
@@ -499,12 +499,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "f40e9a93f3666f58616d70b62cb65c0963fc77ad"
+                "reference": "7ccbfdf4cfb0ce025e27455dc3e516af23eb2800"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-framework/f40e9a93f3666f58616d70b62cb65c0963fc77ad.zip",
-                "reference": "f40e9a93f3666f58616d70b62cb65c0963fc77ad",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7ccbfdf4cfb0ce025e27455dc3e516af23eb2800",
+                "reference": "7ccbfdf4cfb0ce025e27455dc3e516af23eb2800",
                 "shasum": ""
             },
             "require": {
@@ -585,7 +585,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-01-21 17:22:51"
+            "time": "2016-01-28 20:15:10"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -593,12 +593,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0"
+                "reference": "ef941bc83ea63326e44769b922476dc1035ea551"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0",
-                "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ef941bc83ea63326e44769b922476dc1035ea551",
+                "reference": "ef941bc83ea63326e44769b922476dc1035ea551",
                 "shasum": ""
             },
             "require": {
@@ -635,7 +635,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2015-12-19 19:45:57"
+            "time": "2016-01-24 17:03:09"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -769,12 +769,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055"
+                "reference": "1039b239eaf5ea865ded8e403dc707da6a629474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/de2ed3bbe68254efeff68db60092fc8ed5298055",
-                "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/1039b239eaf5ea865ded8e403dc707da6a629474",
+                "reference": "1039b239eaf5ea865ded8e403dc707da6a629474",
                 "shasum": ""
             },
             "require": {
@@ -811,7 +811,51 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-01-08 14:16:18"
+            "time": "2016-01-27 08:28:58"
+        },
+        {
+            "name": "hguenot/yii2-gftp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hguenot/yii2-gftp.git",
+                "reference": "4548a4a3e86dd8f9728ce86412d1379219a8db57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hguenot/yii2-gftp/zipball/4548a4a3e86dd8f9728ce86412d1379219a8db57",
+                "reference": "4548a4a3e86dd8f9728ce86412d1379219a8db57",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "gftp\\": ""
+                },
+                "files": [
+                    "autoload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Hervé Guenot",
+                    "email": "herve@guenot.info"
+                }
+            ],
+            "description": "Ftp is a FTP extension for [YII 2 Framework](http://www.yiiframework.com).",
+            "keywords": [
+                "extension",
+                "gftp",
+                "yii2"
+            ],
+            "time": "2015-12-11 13:56:57"
         },
         {
             "name": "phpspec/php-diff",
@@ -996,7 +1040,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-gii/d1a58d8c64f9075960665dc5347f5906ecb063cf.zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/d1a58d8c64f9075960665dc5347f5906ecb063cf",
                 "reference": "d1a58d8c64f9075960665dc5347f5906ecb063cf",
                 "shasum": ""
             },

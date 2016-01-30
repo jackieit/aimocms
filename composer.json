@@ -26,7 +26,8 @@
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-faker": "*",
-        "yiisoft/yii2-gii": "*"
+        "yiisoft/yii2-gii": "*",
+        "hguenot/yii2-gftp": "*"
     },
     "config": {
         "process-timeout": 1800
