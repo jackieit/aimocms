@@ -140,6 +140,7 @@ return [
     'field input type richEditor'    => '富文本编辑器(tinyMCE)',
     'field input type datePicker'    => '日期选择器',
     'field input type datetimePicker' => '日期时间选择器',
+    'field input type colorPicker'    => '颜色选择器',
     'support key value pair per line or sql statement' => '支持每行一个键值对 "key=>value" 及SQL语句 第一个字段为Key第二个字段为value',
     'useful for string and decimal datatype' => '仅对string和decimal数据类型时有效',
     'Used for database table field name' => '用于数据库中表字段名称，修改时请慎重操作如果与上次名称不一致会修改数据库中字段名称',

@@ -69,6 +69,7 @@ class CmField extends \yii\db\ActiveRecord
             'richEditor'    => Yii::t('app','field input type richEditor'),
             'datePicker'    => Yii::t('app','field input type datePicker'),
             'datetimePicker'=> Yii::t('app','field input type datetimePicker'),
+            'colorPicker'   => Yii::t('app','field input type colorPicker'),
 
         ];
     }

@@ -53,7 +53,7 @@ function uploader(field) {
                 '</div>'
             ),
             $img = $li.find('img');
-        $li.on('click', function() {
+        $li.on('dbclick', function() {
            // console.log(file);
             uploader.removeFile( file.id,true );
             $(this).remove();

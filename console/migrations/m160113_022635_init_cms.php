@@ -118,6 +118,7 @@ class m160113_022635_init_cms extends Migration
             'is_inner'  => 1,
             'site_id'   => 0,
             'tab_index' => 1,
+            'rules' => "[['content'], 'string'],\n[['title', 'seo_title'], 'string', 'max' => 80],\n[['color'], 'string', 'max' => 10],\n[['author', 'tpl_detail', 'file_name', 'slug'], 'string', 'max' => 45],\n[['from', 'photo'], 'string', 'max' => 60],\n[['intro', 'seo_keyword'], 'string', 'max' => 240],\n[['seo_description'], 'string', 'max' => 120]"
         ]);
         //---
         $tableComment = $tableOptions." COMMENT '内容模型表'";
@@ -145,21 +146,21 @@ class m160113_022635_init_cms extends Migration
         ],$tableComment);
 
         $this->batchInsert('{{%cm_field}}',
-            ['cm_id','name','label','hint','data_type','length','input','source','is_inner'],
+            ['cm_id','name','label','hint','data_type','length','input','source','is_inner','options'],
             [
-                [1,'title','标题','','string',80,'textInput','',1],
-                [1,'color','标题颜色','','string',10,'textInput','',1],
-                [1,'author','作者','','string',45,'textInput','',1],
-                [1,'from'  ,'文章来源','','string',60,'textInput','',1],
-                [1,'photo' ,'图片','','string',60,'textInput','',1],
-                [1,'intro' ,'简介','','string',240,'textarea','',1],
-                [1,'content','详细内容','','text',0,'textarea','',1],
-                [1,'tpl_detail','详细内容模板','','text',0,'textarea','',1],
-                [1,'file_name','文件名','','text',0,'textarea','',1],
-                [1,'slug','固定连接','','text',0,'textInput','',1],
-                [1,'seo_title','SEO标题','','string',80,'textInput','',1],
-                [1,'seo_keyword','SEO关键字','','string',240,'textInput','',1],
-                [1,'seo_description','SEO描述','','string',120,'textarea','',1],
+                [1,'title','标题','','string',80,'textInput','',1,''],
+                [1,'color','标题颜色','','string',10,'colorPicker','',1,''],
+                [1,'author','作者','','string',45,'textInput','',1,''],
+                [1,'from'  ,'文章来源','','string',60,'textInput','',1,''],
+                [1,'photo' ,'图片','双击删除已上传图片','string',60,'fileInput','',1,''],
+                [1,'intro' ,'简介','','string',240,'textarea','',1,''],
+                [1,'content','详细内容','','text',0,'richEditor','',1,'["rows"=>16]'],
+                [1,'tpl_detail','详细内容模板','','text',0,'textInput','',1,''],
+                [1,'file_name','文件名','','text',0,'textInput','',1,''],
+                [1,'slug','固定连接','','text',0,'textInput','',1,''],
+                [1,'seo_title','SEO标题','','string',80,'textInput','',1,''],
+                [1,'seo_keyword','SEO关键字','','string',240,'textInput','',1,''],
+                [1,'seo_description','SEO描述','','string',120,'textarea','',1,''],
             ]
         );
         $tableComment = $tableOptions." COMMENT '结点分类表'";
@@ -175,7 +176,7 @@ class m160113_022635_init_cms extends Migration
             'rgt'      => $this->integer()->notNull()->defaultValue(0)."  COMMENT '右值'",
             //'parent'   => $this->integer()->notNull()->defaultValue(0)." COMMENT '上级结点'",
             'depth'    => $this->integer()->notNull()->defaultValue(0)." COMMENT '级点深度'",
-            'slug'     => $this->string(45)->notNull()->defaultValue(0)." COMMENT '英文标识slug'",
+            'slug'     => $this->string(45)->notNull()->defaultValue('')." COMMENT '英文标识slug'",
             'status'     => $this->boolean()->notNull()->defaultValue(0)." COMMENT '结点状态'",
             'v_nodes'  => $this->text()." COMMENT '虚结点包含结点'",
             'workflow' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '投稿工作流'",
@@ -188,6 +189,17 @@ class m160113_022635_init_cms extends Migration
 
         ],$tableComment);
 
+        $this->insert('{{%node}}',[
+            'site_id'     => 1,
+            'cm_id'       => 1,
+            'name'        => '默认站点',
+            'is_real'     => 1,
+            'lft'         => 1,
+            'rgt'         => 2,
+            'status'      => 1,
+            'workflow'    => 1,
+            'tpl_index'   => 'index',
+        ]);
 
         $tableComment = $tableOptions." COMMENT '文章内容表'";
 

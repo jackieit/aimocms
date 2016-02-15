@@ -34,7 +34,7 @@ tinymce.init({
 JS_CODE;
 }
 
-$dateInput = $dateTimeInput= $fileInput = [];
+$dateInput = $dateTimeInput= $fileInput = $colorInput = [];
 
 ?>
 
@@ -47,13 +47,21 @@ $dateInput = $dateTimeInput= $fileInput = [];
             switch ($field['input']) {
                 case 'textInput':
                 case 'passwordInput':
+
                 case 'textarea':
                     $options = array_merge(['maxlength' => true],$field['options']);
                     $input->{$field['input']}($options)->label($field['label']);
                     break;
+                case 'colorPicker':
+                    $field['input'] = 'textInput';
+                    array_push($colorInput,$field['name']);
+                    $options = array_merge(['class'=>'form-control colorPicker'],$field['options']);
+                    $input->textInput($options)->label($field['label']);
+                    break;
                 case 'hiddenInput':
                     $input->{$field['input']}($field['options'])->label(false);
                     break;
+
                 case 'fileInput':
                     array_push($fileInput,$field['name']);
                     $extra_opt = ['id'=>$field['name'].'_val'];
@@ -164,6 +172,23 @@ for(var i=0;i<upload_fields.length;i++)
     uploader(upload_fields[i]);
 }
 JS_CODE;
+
+if(in_array('colorPicker',$inputType))
+{
+    \backend\assets\ColorPickerAsset::register($this);
+    $js .= <<<JS_CODE
+
+$('.colorPicker').colorPicker({
+        renderCallback: function(\$elm, toggled) {
+        var colors = this.color.colors;
+        if(colors.HEX!='FFFFFF')
+            \$elm.val('#' + colors.HEX);
+        else
+            \$elm.val('');
+    }
+}); // that's it
+JS_CODE;
+}
 $this->registerJs($js);
 if(in_array('fileInput',$inputType)){
     $asset = \backend\assets\WebUploaderAsset::register($this);
