@@ -113,6 +113,7 @@ return [
     'This table has already been taken.' => '此表名称已经被占用，请重试',
     'title Field Rules' => '主标题字段',
     'select Field Rules' => '列表字段',
+    'Input advanced fields' => '高级字段',
     'Prompt datatype' => '请选择数据类型',
     'Comment prefix'   => '自定义模型',
 
@@ -198,4 +199,6 @@ return [
     //内容管理
     'Create Content' => '新增内容',
     'Contents' => '内容管理',
+    'General tab' => '常规内容',
+    'Advanced tab' => '高级内容',
 ];

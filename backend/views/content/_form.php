@@ -8,7 +8,8 @@ use yii\helpers\Url;
 /* @var $model backend\models\Content */
 /* @var $form yii\widgets\ActiveForm */
 $fields = $model->getFields();
-$inputType = ArrayHelper::getColumn($fields,'input');
+$adv_fields = $model->getAdvFields();
+$inputType  = ArrayHelper::getColumn($fields,'input');
 $js = '';
 if(in_array('richEditor',$inputType)){
     \backend\assets\TinyMceAsset::register($this);
@@ -35,38 +36,51 @@ JS_CODE;
 }
 
 $dateInput = $dateTimeInput= $fileInput = $colorInput = [];
-
+$adv_field_str = '';
 ?>
 
-<div class="content-form">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#home" data-toggle="tab"><?=Yii::t('app','General tab')?></a>
+            </li>
+            <li><a href="#profile" data-toggle="tab"><?=Yii::t('app','Advanced tab')?></a>
+            </li>
 
-    <?php $form = ActiveForm::begin(); ?>
-    <?php
-        foreach($fields as $field):
-            $input = $form->field($model,$field['name']);
-            switch ($field['input']) {
-                case 'textInput':
-                case 'passwordInput':
+        </ul>
 
-                case 'textarea':
-                    $options = array_merge(['maxlength' => true],$field['options']);
-                    $input->{$field['input']}($options)->label($field['label']);
-                    break;
-                case 'colorPicker':
-                    $field['input'] = 'textInput';
-                    array_push($colorInput,$field['name']);
-                    $options = array_merge(['class'=>'form-control colorPicker'],$field['options']);
-                    $input->textInput($options)->label($field['label']);
-                    break;
-                case 'hiddenInput':
-                    $input->{$field['input']}($field['options'])->label(false);
-                    break;
+        <!-- Tab panes -->
+        <?php $form = ActiveForm::begin(); ?>
 
-                case 'fileInput':
-                    array_push($fileInput,$field['name']);
-                    $extra_opt = ['id'=>$field['name'].'_val'];
-                    $field['options'] = array_merge($field['options'],$extra_opt);
-                    $input = $form->field($model,$field['name'],[
+        <div class="tab-content">
+
+            <div class="tab-pane fade in active" id="home">
+                <div class="content-form">
+                <?php
+                foreach($fields as $field):
+                    $input = $form->field($model,$field['name']);
+                    switch ($field['input']) {
+                        case 'textInput':
+                        case 'passwordInput':
+
+                        case 'textarea':
+                            $options = array_merge(['maxlength' => true],$field['options']);
+                            $input->{$field['input']}($options)->label($field['label']);
+                            break;
+                        case 'colorPicker':
+
+                            array_push($colorInput,$field['name']);
+                            $options = array_merge(['class'=>'form-control colorPicker'],$field['options']);
+                            $input->textInput($options)->label($field['label']);
+                            break;
+                        case 'hiddenInput':
+                            $input->{$field['input']}($field['options'])->label(false);
+                            break;
+
+                        case 'fileInput':
+                            array_push($fileInput,$field['name']);
+                            $extra_opt = ['id'=>$field['name'].'_val'];
+                            $field['options'] = array_merge($field['options'],$extra_opt);
+                            $input = $form->field($model,$field['name'],[
                                 'template' => "
                                     {label}\n
                                     <div class='input-group'>
@@ -77,60 +91,74 @@ $dateInput = $dateTimeInput= $fileInput = $colorInput = [];
                                         </div>
                                     </div>"
                             ])->hiddenInput($field['options'])->label($field['label']);
-                    break;
-                case 'radio':
-                case 'checkbox':
+                            break;
+                        case 'radio':
+                        case 'checkbox':
 
-                $input->{$field['input']}($field['options'])->label($field['label']);
-                    break;
-                case 'dropDownList':
-                    $extra_opt = ['prompt'=>Yii::t('app','Please select')];
-                case 'checkboxList':
-                case 'radioList':
-                    $data = $model->getSource($field['source']);
-                    if(isset($extra_opt))
-                        $field['options'] = array_merge($field['options'],$extra_opt);
-                    $input->{$field['input']}($data,$field['options'])->label($field['label']);
-                    break;
-                case 'richEditor':
-                    $options = array_merge(['class'=>'richEditor'],$field['options']);
-                    $input->textarea($options)->label($field['label']);
-                    break;
-                case 'datePicker':
+                            $input->{$field['input']}($field['options'])->label($field['label']);
+                            break;
+                        case 'dropDownList':
+                            $extra_opt = ['prompt'=>Yii::t('app','Please select')];
+                        case 'checkboxList':
+                        case 'radioList':
+                            $data = $model->getSource($field['source']);
+                            if(isset($extra_opt))
+                                $field['options'] = array_merge($field['options'],$extra_opt);
+                            $input->{$field['input']}($data,$field['options'])->label($field['label']);
+                            break;
+                        case 'richEditor':
+                            $options = array_merge(['class'=>'richEditor'],$field['options']);
+                            $input->textarea($options)->label($field['label']);
+                            break;
+                        case 'datePicker':
 
-                case 'datetimePicker':
-                    if($field['input']=='datePicker') {
-                        $fname = &$field['name'];
-                        array_push($dateInput, $fname);
-                    }else{
-                        $fname = &$field['name'];
-                        array_push($dateTimeInput,$fname);
+                        case 'datetimePicker':
+                            if($field['input']=='datePicker') {
+                                $fname = &$field['name'];
+                                array_push($dateInput, $fname);
+                            }else{
+                                $fname = &$field['name'];
+                                array_push($dateTimeInput,$fname);
+                            }
+
+                            $input = $form->field($model,$field['name'],[
+                                'template' => "{label}\n<div class='input-group' id='picker-{$fname}'>{input}<span class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span></div> \n{hint}\n{error}"
+                            ]);
+                            $options = array_merge(['class'=>'form-control'],$field['options']);
+                            $input->textInput($options)->label($field['label']);
+                            break;
+
+                        default:
+                            ;
                     }
+                    if(!empty($field['hint'])){
+                        $input->hint($field['hint']);
+                    }
+                    if(in_array($field['name'],$adv_fields))
+                    {
+                        $adv_field_str .=$input;
+                    }else{
+                        echo $input;
 
-                    $input = $form->field($model,$field['name'],[
-                        'template' => "{label}\n<div class='input-group' id='picker-{$fname}'>{input}<span class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></span></div> \n{hint}\n{error}"
-                    ]);
-                    $options = array_merge(['class'=>'form-control'],$field['options']);
-                    $input->textInput($options)->label($field['label']);
-                    break;
+                    }
+                endforeach;
+                ?>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile">
+                <div class="content-form">
 
-                default:
-                    ;
-            }
-            if(!empty($field['hint'])){
-                $input->hint($field['hint']);
-            }
-            echo $input;
-        endforeach;
-    ?>
+                <?=$adv_field_str?>
+                </div>
+             </div>
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+        </div>
+        <?php ActiveForm::end(); ?>
 
-    <?php ActiveForm::end(); ?>
 
-</div>
 <?php
 if(in_array('datePicker',$inputType) || in_array('datetimePicker',$inputType))
 {

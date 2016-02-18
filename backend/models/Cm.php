@@ -46,7 +46,7 @@ class Cm extends \yii\db\ActiveRecord
             [['name','tab','tab_index'],'required','on'=>['create','update']],
             [['is_inner', 'site_id', 'tab_index'], 'integer'],
             ['tab', 'unique', 'targetClass' => '\backend\models\Cm', 'message' => Yii::t('app','This table has already been taken.'),'on'=>'create'],
-            [['rules','title_field','select_field'],'string'],
+            [['rules','title_field','select_field','adv_field'],'string'],
             [['name', 'tab'], 'string', 'max' => 45],
         ];
     }
@@ -67,6 +67,7 @@ class Cm extends \yii\db\ActiveRecord
             'rules' => Yii::t('app', 'Field Rules'),
             'title_field' => Yii::t('app', 'title Field Rules'),
             'select_field' => Yii::t('app', 'select Field Rules'),
+            'adv_field' => Yii::t('app', 'Input advanced fields'),
 
         ];
     }

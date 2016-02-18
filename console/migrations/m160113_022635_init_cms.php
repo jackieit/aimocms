@@ -109,7 +109,8 @@ class m160113_022635_init_cms extends Migration
             'tab_index' => $this->boolean()->notNull()->defaultValue(0)." COMMENT '对应索引表'", //1 cm_index 2 user
             'rules'    => $this->text()."  COMMENT '数据来源'",
             'title_field'    => $this->text()."  COMMENT '标题字段'",
-            'select_field'  => $this->text()."  COMMENT '列表字段'",
+            'select_field'  => $this->text()."   COMMENT '列表字段'",
+            'adv_field'     => $this->text()."   COMMENT '高级字段,点击高级时显示'"
 
         ],$tableComment);
         $this->insert('{{%cm}}',[
@@ -118,7 +119,8 @@ class m160113_022635_init_cms extends Migration
             'is_inner'  => 1,
             'site_id'   => 0,
             'tab_index' => 1,
-            'rules' => "[['content'], 'string'],\n[['title', 'seo_title'], 'string', 'max' => 80],\n[['color'], 'string', 'max' => 10],\n[['author', 'tpl_detail', 'file_name', 'slug'], 'string', 'max' => 45],\n[['from', 'photo'], 'string', 'max' => 60],\n[['intro', 'seo_keyword'], 'string', 'max' => 240],\n[['seo_description'], 'string', 'max' => 120]"
+            'rules' => "[['content'], 'string'],\n[['title', 'seo_title'], 'string', 'max' => 80],\n[['color'], 'string', 'max' => 10],\n[['author', 'tpl_detail', 'file_name', 'slug'], 'string', 'max' => 45],\n[['from', 'photo'], 'string', 'max' => 60],\n[['intro', 'seo_keyword'], 'string', 'max' => 240],\n[['seo_description'], 'string', 'max' => 120]",
+            'adv_field' => 'tpl_detail,file_name,slug,seo_title,seo_keyword,seo_description',
         ]);
         //---
         $tableComment = $tableOptions." COMMENT '内容模型表'";

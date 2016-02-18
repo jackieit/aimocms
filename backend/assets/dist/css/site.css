@@ -43,3 +43,4 @@ input.form-control.field-sort{width:60px;  margin-left: 5px;}
 #myList .hintWrapper{background-color: #7cb47c;}
 #sortableListsBase .lists{background: #bbffbb;border-bottom: 1px solid white;}
 /*node sort list end*/
+.content-form{ padding: 10px; }

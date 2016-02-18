@@ -43,6 +43,7 @@ class Content extends \yii\db\ActiveRecord
     public static $_select_field;
 
     public static $_title_field;
+    public static $_adv_field;
 
     /**
      * @inheritdoc
@@ -56,6 +57,12 @@ class Content extends \yii\db\ActiveRecord
     {
         return self::$_fields;
     }
+    public function getAdvFields()
+    {
+        $fields = self::$_adv_field;
+        return explode(',',$fields);
+
+    }
     /**
      * @param $id
      */
@@ -68,6 +75,7 @@ class Content extends \yii\db\ActiveRecord
         self::$_rules         = self::getRulesFromString($cm->rules,$table);
         self::$_select_field = $cm->select_field;
         self::$_title_field  = $cm->title_field;
+        self::$_adv_field    = $cm->adv_field;
 
         $fields = CmField::find()->where(['cm_id'=>$id])->orderBy(['sort' => SORT_ASC,'id'=>SORT_ASC])->asArray()->all();
         self::$_fields  = self::getOptions($fields);
